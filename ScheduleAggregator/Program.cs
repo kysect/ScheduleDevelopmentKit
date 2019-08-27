@@ -4,32 +4,32 @@ using System.Linq;
 using System.Text;
 using ItmoScheduleApiWrapper;
 using ItmoScheduleApiWrapper.Models;
+using MoreLinq;
 
 namespace ScheduleAggregator
 {
-    class Program
+    static class Program
     {
         static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var schedule = GetGroups()
+            var scheduleItems = GetGroups()
                 .AsParallel()
                 .Select(GetScheduleItemModels)
                 .SelectMany(e => e)
-                .Select(e => (e.DataDay, e.DataWeek, e.Group, e.StartTime, e.SubjectTitle))
-                .GroupBy(e => e.DataDay)
                 .ToList();
 
-            foreach (var tuple in schedule)
-            {
-                Console.WriteLine($"\t\t{tuple.Key}");
-                foreach (var valueTuple in tuple)
-                {
-                    Console.WriteLine(valueTuple);
-                }
-            }
+            Console.WriteLine("\t\tLectures");
+            Print(scheduleItems
+                .Where(e => e.IsLecture())
+                .DistinctBy(e => (e.StartTime, e.SubjectTitle, e.Room))
+                .ToList());
 
+            Console.WriteLine("\n\n\t\tPractice");
+            Print(scheduleItems
+                .Where(e => e.IsLecture() == false)
+                .ToList());
         }
 
         public static IEnumerable<ScheduleItemModel> GetScheduleItemModels(String groupTitle)
@@ -54,6 +54,28 @@ namespace ScheduleAggregator
             yield return "M3407";
             yield return "M3408";
             yield return "M3409";
+        }
+
+        private static Boolean IsLecture(this ScheduleItemModel model)
+        {
+            return model.Status == "Лек";
+        }
+
+        private static void Print(List<ScheduleItemModel> items)
+        {
+            var scheduleItems = items
+                .Select(e => (e.DataDay, e.DataWeek, e.Group, e.StartTime, e.SubjectTitle))
+                .GroupBy(e => (e.DataDay, e.DataWeek))
+                .ToList();
+
+            foreach (var tuple in scheduleItems)
+            {
+                Console.WriteLine($"\t\t{tuple.Key}");
+                foreach (var valueTuple in tuple)
+                {
+                    Console.WriteLine(valueTuple);
+                }
+            }
         }
     }
 }
