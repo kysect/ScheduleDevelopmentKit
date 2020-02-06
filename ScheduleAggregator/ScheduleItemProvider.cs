@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using ItmoScheduleApiWrapper;
 using ItmoScheduleApiWrapper.Models;
+using ScheduleAggregator.Printers;
 
 namespace ScheduleAggregator
 {
     public class ScheduleItemProvider
     {
-        public ScheduleItemProvider(List<String> groupList)
+        public ScheduleItemProvider(List<String> groupList, IPrinter printer)
         {
             GroupList = groupList;
+            _printer = printer;
         }
 
         public List<string> GroupList { get; }
         private List<ScheduleItemModel> _scheduleItemModels;
+        private readonly IPrinter _printer;
 
         public void PrintLecture()
         {
@@ -61,7 +64,7 @@ namespace ScheduleAggregator
             return result;
         }
 
-        private static void Print(IEnumerable<ScheduleItemModel> items)
+        private void Print(IEnumerable<ScheduleItemModel> items)
         {
             var scheduleItems = items
                 .Select(e => (e.DataDay, e.DataWeek, e.Group, e.StartTime, e.SubjectTitle, e.Teacher))
@@ -70,10 +73,10 @@ namespace ScheduleAggregator
 
             foreach (var tuple in scheduleItems)
             {
-                Console.WriteLine($"\t\t{tuple.Key}");
+                _printer.Print($"\t\t{tuple.Key}");
                 foreach (var valueTuple in tuple)
                 {
-                    Console.WriteLine(valueTuple);
+                    _printer.Print(valueTuple.ToString());
                 }
             }
         }

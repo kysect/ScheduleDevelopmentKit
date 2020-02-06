@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ScheduleAggregator.Printers;
 
 namespace ScheduleAggregator
 {
@@ -10,7 +11,7 @@ namespace ScheduleAggregator
         static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            ScheduleItemProvider provider = new ScheduleItemProvider(GetTmpGroups().ToList());
+            ScheduleItemProvider provider = new ScheduleItemProvider(GetTmpGroups().ToList(), new ConsolePrinter());
             
             Console.WriteLine("\t\tLectures");
             provider.PrintLecture();
