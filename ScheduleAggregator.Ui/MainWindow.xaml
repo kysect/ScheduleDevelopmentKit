@@ -10,5 +10,12 @@
     <StackPanel Orientation="Horizontal">
         <ListBox Name="OddItemList" Width="600"></ListBox>
         <ListBox Name="EvenItemList" Width="600"></ListBox>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="InputGroup" Text="M3101" Width="200" TextAlignment="Center"></TextBox>
+                <Button Content="Add" Width="50" Click="Button_Click"></Button>
+            </StackPanel>
+            <ListBox Name="AddedGroupList" SelectionChanged="AddedGroupList_OnSelectionChanged"></ListBox>
+        </StackPanel>
     </StackPanel>
 </Window>

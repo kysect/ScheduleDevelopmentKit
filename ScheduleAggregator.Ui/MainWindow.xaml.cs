@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using ItmoScheduleApiWrapper.Models;
@@ -12,11 +13,21 @@ namespace ScheduleAggregator.Ui
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<string> GroupList = new ObservableCollection<string>();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            var provider = new ScheduleItemProvider(new List<string> {"M3101", "M3107" }, null);
+            GroupList.Add("M3101");
+            GroupList.Add("M3107");
+            InitLists();
+            AddedGroupList.ItemsSource = GroupList;
+        }
+
+        public void InitLists()
+        {
+            var provider = new ScheduleItemProvider(GroupList, null);
             var items = provider.GetItemsForGroup();
             InitList(OddItemList, DataWeekType.Odd, items);
             InitList(EvenItemList, DataWeekType.Even, items);
@@ -34,6 +45,33 @@ namespace ScheduleAggregator.Ui
                 new DaySchedule(items, weekType, DataDayType.Saturday)
             };
             listBox.ItemsSource = schedule;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var newGroup = InputGroup.Text.ToUpper();
+            if (!GroupList.Contains(newGroup))
+            {
+                GroupList.Add(newGroup);
+                InitLists();
+            }
+        }
+
+        private void AddedGroupList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count <= 0)
+                return;
+            
+            var element = e.AddedItems[0];
+            if (GroupList.Contains(element.ToString()))
+            {
+                GroupList.Remove(element.ToString());
+                InitLists();
+            }
+            else
+            {
+                MessageBox.Show($"Error: {element.ToString()}");
+            }
         }
     }
 }

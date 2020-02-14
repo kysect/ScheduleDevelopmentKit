@@ -9,9 +9,9 @@ namespace ScheduleAggregator
 {
     public class ScheduleItemProvider
     {
-        public ScheduleItemProvider(List<String> groupList, IPrinter printer)
+        public ScheduleItemProvider(IEnumerable<String> groupList, IPrinter printer)
         {
-            GroupList = groupList;
+            GroupList = groupList.ToList();
             _printer = printer;
         }
 
