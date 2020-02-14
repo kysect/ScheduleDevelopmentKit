@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using ItmoScheduleApiWrapper.Helpers;
@@ -20,8 +19,15 @@ namespace ScheduleAggregator.Ui.CustomElements
                 .Where(i => i.DataWeek.Compare(dataWeekType))
                 .Where(i => i.DataDay == dataDayType)
                 .ToList();
+
+            var printableData =
+                _items
+                    .Select(e => (e.StartTime, e.SubjectTitle, e.Status, e.Group, e.Teacher))
+                    .Select(t => t.ToString())
+                    .ToList();
+
             InitializeComponent();
-            ItemsList.ItemsSource = _items;
+            ItemsList.ItemsSource = printableData;
         }
     }
 }

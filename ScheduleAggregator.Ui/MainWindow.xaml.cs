@@ -16,7 +16,7 @@ namespace ScheduleAggregator.Ui
         {
             InitializeComponent();
 
-            var provider = new ScheduleItemProvider(new List<string> {"M3101"}, null);
+            var provider = new ScheduleItemProvider(new List<string> {"M3101", "M3107" }, null);
             var items = provider.GetItemsForGroup();
             InitList(OddItemList, DataWeekType.Odd, items);
             InitList(EvenItemList, DataWeekType.Even, items);
