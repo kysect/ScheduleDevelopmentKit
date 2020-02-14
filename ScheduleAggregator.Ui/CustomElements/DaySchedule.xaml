@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ScheduleAggregator.Ui.CustomElements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-        <ListBox Width="400" MinHeight="400" Name="ItemsList">
+        <ListBox MinHeight="150" Name="ItemsList" Width="500">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

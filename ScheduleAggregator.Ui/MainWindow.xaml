@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:ScheduleAggregator.Ui"
         xmlns:customElements="clr-namespace:ScheduleAggregator.Ui.CustomElements"
         mc:Ignorable="d"
-        Title="MainWindow" Height="728" Width="1128">
-    <Grid>
-        <ListBox Name="OddItemList">
-
-        </ListBox>
-    </Grid>
+        Title="MainWindow" Height="1000" Width="1400">
+    <StackPanel Orientation="Horizontal">
+        <ListBox Name="OddItemList" Width="600"></ListBox>
+        <ListBox Name="EvenItemList" Width="600"></ListBox>
+    </StackPanel>
 </Window>
