@@ -40,6 +40,7 @@ namespace ScheduleAggregator
         private static IEnumerable<String> GetTmpGroups()
         {
             yield return "M3101";
+            yield return "M3405";
         }
     }
 }
