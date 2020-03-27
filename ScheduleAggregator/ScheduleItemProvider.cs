@@ -21,23 +21,38 @@ namespace ScheduleAggregator
 
         public void PrintLecture()
         {
-            Print(GetItemsForGroup().Where(e => e.IsLecture()));
+            Print(GetItemsForGroup(new List<Int32>()).Where(e => e.IsLecture()));
         }
 
         public void PrintPractice()
         {
-            Print(GetItemsForGroup().Where(e => !e.IsLecture()));
+            Print(GetItemsForGroup(new List<Int32>()).Where(e => !e.IsLecture()));
         }
 
-
-        public List<ScheduleItemModel> GetItemsForGroup()
+        public List<ScheduleItemModel> GetItemsForGroup(List<int> userIdList)
         {
+            List<ScheduleItemModel> groupsItems = GroupList
+                .AsParallel()
+                .Select(GetScheduleItemModels)
+                .SelectMany(e => e)
+                .ToList();
+
+            foreach (Int32 userId in userIdList)
+            {
+                var provider = new ItmoApiProvider();
+
+                List<ScheduleItemModel> result = provider
+                    .ScheduleApi
+                    .GetPersonSchedule(userId)
+                    .Result
+                    .Schedule;
+
+                groupsItems.AddRange(result);
+            }
+
             if (_scheduleItemModels == null)
             {
-                _scheduleItemModels = GroupList
-                    .AsParallel()
-                    .Select(GetScheduleItemModels)
-                    .SelectMany(e => e)
+                _scheduleItemModels = groupsItems
                     .OrderBy(e => e.StartTime)
                     .ThenBy(e => e.SubjectTitle)
                     .ThenBy(e => e.Group)
@@ -58,7 +73,6 @@ namespace ScheduleAggregator
                 .Result
                 .Schedule;
 
-            result.ForEach(s => s.Group = groupTitle);
             return result;
         }
 
