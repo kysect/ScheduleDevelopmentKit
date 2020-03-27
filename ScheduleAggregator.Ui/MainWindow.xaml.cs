@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ItmoScheduleApiWrapper.Models;
@@ -14,6 +16,7 @@ namespace ScheduleAggregator.Ui
     public partial class MainWindow : Window
     {
         public ObservableCollection<string> GroupList = new ObservableCollection<string>();
+        public ObservableCollection<int> UserIdList = new ObservableCollection<int>();
 
         public MainWindow()
         {
@@ -23,12 +26,14 @@ namespace ScheduleAggregator.Ui
             GroupList.Add("M3107");
             InitLists();
             AddedGroupList.ItemsSource = GroupList;
+            AddedUserList.ItemsSource = UserIdList;
         }
 
         public void InitLists()
         {
             var provider = new ScheduleItemProvider(GroupList, null);
-            var items = provider.GetItemsForGroup();
+            List<ScheduleItemModel> items = provider.GetItemsForGroup(UserIdList.ToList());
+
             InitList(OddItemList, DataWeekType.Odd, items);
             InitList(EvenItemList, DataWeekType.Even, items);
         }
@@ -71,6 +76,16 @@ namespace ScheduleAggregator.Ui
             else
             {
                 MessageBox.Show($"Error: {element.ToString()}");
+            }
+        }
+
+        private void UserAddButton_OnClick(Object sender, RoutedEventArgs e)
+        {
+            Int32 id = int.Parse(InputUser.Text);
+            if (!UserIdList.Contains(id))
+            {
+                UserIdList.Add(id);
+                InitLists();
             }
         }
     }
