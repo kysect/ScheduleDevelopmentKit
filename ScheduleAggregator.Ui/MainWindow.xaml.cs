@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ItmoScheduleApiWrapper.Models;
@@ -27,8 +26,8 @@ namespace ScheduleAggregator.Ui
 
         public void InitLists()
         {
-            var provider = new ScheduleItemProvider(GroupList, null);
-            List<ScheduleItemModel> items = provider.GetItemsForGroup(UserIdList.ToList());
+            var provider = new ScheduleItemProvider(GroupList, UserIdList, null);
+            List<ScheduleItemModel> items = provider.GetItemsForGroup();
 
             InitList(OddItemList, DataWeekType.Odd, items);
             InitList(EvenItemList, DataWeekType.Even, items);
