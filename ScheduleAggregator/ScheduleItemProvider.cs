@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ItmoScheduleApiWrapper;
 using ItmoScheduleApiWrapper.Models;
@@ -9,24 +8,25 @@ namespace ScheduleAggregator
 {
     public class ScheduleItemProvider
     {
-        public ScheduleItemProvider(IEnumerable<String> groupList, IPrinter printer)
+        public ScheduleItemProvider(IEnumerable<string> groupList, IPrinter printer)
         {
             GroupList = groupList.ToList();
             _printer = printer;
         }
 
         public List<string> GroupList { get; }
+
         private List<ScheduleItemModel> _scheduleItemModels;
         private readonly IPrinter _printer;
 
         public void PrintLecture()
         {
-            Print(GetItemsForGroup(new List<Int32>()).Where(e => e.IsLecture()));
+            Print(GetItemsForGroup(new List<int>()).Where(e => e.IsLecture()));
         }
 
         public void PrintPractice()
         {
-            Print(GetItemsForGroup(new List<Int32>()).Where(e => !e.IsLecture()));
+            Print(GetItemsForGroup(new List<int>()).Where(e => !e.IsLecture()));
         }
 
         public List<ScheduleItemModel> GetItemsForGroup(List<int> userIdList)
@@ -37,7 +37,7 @@ namespace ScheduleAggregator
                 .SelectMany(e => e)
                 .ToList();
 
-            foreach (Int32 userId in userIdList)
+            foreach (int userId in userIdList)
             {
                 var provider = new ItmoApiProvider();
 
@@ -63,7 +63,7 @@ namespace ScheduleAggregator
             return _scheduleItemModels;
         }
 
-        private static IEnumerable<ScheduleItemModel> GetScheduleItemModels(String groupTitle)
+        private static IEnumerable<ScheduleItemModel> GetScheduleItemModels(string groupTitle)
         {
             var provider = new ItmoApiProvider();
 
@@ -92,7 +92,5 @@ namespace ScheduleAggregator
                 }
             }
         }
-
-
     }
 }

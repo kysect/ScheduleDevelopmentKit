@@ -10,7 +10,7 @@ namespace ScheduleAggregator.Printers
 
     public class ConsolePrinter : IPrinter
     {
-        public void Print(String message)
+        public void Print(string message)
         {
             Console.WriteLine(message);
         }
@@ -18,14 +18,14 @@ namespace ScheduleAggregator.Printers
 
     public class FilePrinter : IPrinter
     {
-        private readonly String _filePath;
+        private readonly string _filePath;
 
         public FilePrinter(string filePath)
         {
             _filePath = filePath;
         }
 
-        public void Print(String message)
+        public void Print(string message)
         {
             File.AppendAllText(_filePath, $"{message}\n");
         }
