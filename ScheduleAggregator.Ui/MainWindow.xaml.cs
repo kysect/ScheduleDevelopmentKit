@@ -19,7 +19,9 @@ namespace ScheduleAggregator.Ui
 
             GroupList.Add("M3101");
             GroupList.Add("M3107");
+
             InitLists();
+            
             AddedGroupList.ItemsSource = GroupList;
             AddedUserList.ItemsSource = UserIdList;
         }
@@ -29,25 +31,28 @@ namespace ScheduleAggregator.Ui
             var provider = new ScheduleItemProvider(GroupList, UserIdList, null);
             List<ScheduleItemModel> items = provider.GetItemsForGroup();
 
-            InitList(OddItemList, DataWeekType.Odd, items);
-            InitList(EvenItemList, DataWeekType.Even, items);
-        }
-
-        public void InitList(ListBox listBox, DataWeekType weekType, List<ScheduleItemModel> items)
-        {
-            List<DaySchedule> schedule = new List<DaySchedule>
+            OddItemList.ItemsSource = new List<DaySchedule>
             {
-                new DaySchedule(items, weekType, DataDayType.Monday),
-                new DaySchedule(items, weekType, DataDayType.Tuesday),
-                new DaySchedule(items, weekType, DataDayType.Wednesday),
-                new DaySchedule(items, weekType, DataDayType.Thursday),
-                new DaySchedule(items, weekType, DataDayType.Friday),
-                new DaySchedule(items, weekType, DataDayType.Saturday)
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Monday),
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Tuesday),
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Wednesday),
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Thursday),
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Friday),
+                new DaySchedule(items, DataWeekType.Odd, DataDayType.Saturday)
             };
-            listBox.ItemsSource = schedule;
+
+            EvenItemList.ItemsSource = new List<DaySchedule>
+            {
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Monday),
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Tuesday),
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Wednesday),
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Thursday),
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Friday),
+                new DaySchedule(items, DataWeekType.Even, DataDayType.Saturday)
+            };
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GroupAdd_Click(object sender, RoutedEventArgs e)
         {
             var newGroup = InputGroup.Text.ToUpper();
             if (!GroupList.Contains(newGroup))
@@ -68,18 +73,27 @@ namespace ScheduleAggregator.Ui
                 GroupList.Remove(element.ToString());
                 InitLists();
             }
-            else
-            {
-                MessageBox.Show($"Error: {element}");
-            }
         }
 
-        private void UserAddButton_OnClick(object sender, RoutedEventArgs e)
+        private void UserAdd_OnClick(object sender, RoutedEventArgs e)
         {
             int id = int.Parse(InputUser.Text);
             if (!UserIdList.Contains(id))
             {
                 UserIdList.Add(id);
+                InitLists();
+            }
+        }
+
+        private void AddedUserList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count <= 0)
+                return;
+
+            int id = int.Parse(e.AddedItems[0].ToString());
+            if (UserIdList.Contains(id))
+            {
+                UserIdList.Remove(id);
                 InitLists();
             }
         }

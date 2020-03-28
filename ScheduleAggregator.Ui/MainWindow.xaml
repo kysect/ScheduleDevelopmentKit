@@ -22,7 +22,7 @@
                     TextAlignment="Center" />
                 <Button
                     Width="50"
-                    Click="Button_Click"
+                    Click="GroupAdd_Click"
                     Content="Add" />
             </StackPanel>
             <ListBox Name="AddedGroupList" SelectionChanged="AddedGroupList_OnSelectionChanged" />
@@ -34,12 +34,11 @@
                     Text="113319"
                     TextAlignment="Center" />
                 <Button
-                    Name="UserAddButton"
                     Width="50"
-                    Click="UserAddButton_OnClick"
+                    Click="UserAdd_OnClick"
                     Content="Add" />
             </StackPanel>
-            <ListBox Name="AddedUserList" SelectionChanged="AddedGroupList_OnSelectionChanged" />
+            <ListBox Name="AddedUserList" SelectionChanged="AddedUserList_OnSelectionChanged" />
 
         </StackPanel>
     </StackPanel>
