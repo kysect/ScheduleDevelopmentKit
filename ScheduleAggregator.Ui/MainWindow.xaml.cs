@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -10,9 +9,6 @@ using ScheduleAggregator.Ui.CustomElements;
 
 namespace ScheduleAggregator.Ui
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public ObservableCollection<string> GroupList = new ObservableCollection<string>();
@@ -75,13 +71,13 @@ namespace ScheduleAggregator.Ui
             }
             else
             {
-                MessageBox.Show($"Error: {element.ToString()}");
+                MessageBox.Show($"Error: {element}");
             }
         }
 
-        private void UserAddButton_OnClick(Object sender, RoutedEventArgs e)
+        private void UserAddButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Int32 id = int.Parse(InputUser.Text);
+            int id = int.Parse(InputUser.Text);
             if (!UserIdList.Contains(id))
             {
                 UserIdList.Add(id);

@@ -14,19 +14,14 @@ namespace ScheduleAggregator
             Console.OutputEncoding = Encoding.UTF8;
             string input = Console.ReadLine();
 
-            if (string.IsNullOrEmpty(input))
-            {
-                List<String> groups = GetTmpGroups().ToList();
-                Execute(new ConsolePrinter(), groups);
-            }
-            else
-            {
-                String[] groups = File.ReadAllLines(input);
-                Execute(new ConsolePrinter(), groups);
-            }
+            string[] groups = string.IsNullOrEmpty(input)
+                ? GetTmpGroups().ToArray()
+                : File.ReadAllLines(input);
+
+            Execute(new ConsolePrinter(), groups);
         }
 
-        public static void Execute(IPrinter printer, IEnumerable<String> groups)
+        public static void Execute(IPrinter printer, IEnumerable<string> groups)
         {
             var provider = new ScheduleItemProvider(groups.ToList(), printer);
 
@@ -37,7 +32,7 @@ namespace ScheduleAggregator
             provider.PrintPractice();
         }
 
-        private static IEnumerable<String> GetTmpGroups()
+        private static IEnumerable<string> GetTmpGroups()
         {
             yield return "M3101";
             yield return "M3405";
