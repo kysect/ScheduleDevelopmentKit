@@ -8,72 +8,73 @@ namespace ScheduleAggregator
 {
     public class ScheduleItemProvider
     {
-        public ScheduleItemProvider(IEnumerable<string> groupList, IPrinter printer)
+        public ScheduleItemProvider(IEnumerable<string> groupList, IEnumerable<int> userList, IPrinter printer)
         {
             GroupList = groupList.ToList();
+            UserList = userList.ToList();
             _printer = printer;
         }
 
         public List<string> GroupList { get; }
+        public List<int> UserList { get; }
 
         private List<ScheduleItemModel> _scheduleItemModels;
         private readonly IPrinter _printer;
 
         public void PrintLecture()
         {
-            Print(GetItemsForGroup(new List<int>()).Where(e => e.IsLecture()));
+            Print(GetItemsForGroup().Where(e => e.IsLecture()));
         }
 
         public void PrintPractice()
         {
-            Print(GetItemsForGroup(new List<int>()).Where(e => !e.IsLecture()));
+            Print(GetItemsForGroup().Where(e => !e.IsLecture()));
         }
 
-        public List<ScheduleItemModel> GetItemsForGroup(List<int> userIdList)
+        public List<ScheduleItemModel> GetItemsForGroup()
         {
-            List<ScheduleItemModel> groupsItems = GroupList
-                .AsParallel()
-                .Select(GetScheduleItemModels)
-                .SelectMany(e => e)
-                .ToList();
-
-            foreach (int userId in userIdList)
+            if (_scheduleItemModels != null)
             {
-                var provider = new ItmoApiProvider();
+                return _scheduleItemModels;
+            }
 
-                List<ScheduleItemModel> result = provider
+            var provider = new ItmoApiProvider();
+
+            IEnumerable<ScheduleItemModel> GetGroupSchedule(string groupTitle) =>
+                provider
+                    .ScheduleApi
+                    .GetGroupSchedule(groupTitle)
+                    .Result
+                    .Schedule;
+
+            IEnumerable<ScheduleItemModel> GetPersonSchedule(int userId) =>
+                provider
                     .ScheduleApi
                     .GetPersonSchedule(userId)
                     .Result
                     .Schedule;
 
-                groupsItems.AddRange(result);
-            }
+            List<ScheduleItemModel> groupsItems = GroupList
+                .AsParallel()
+                .Select(GetGroupSchedule)
+                .SelectMany(e => e)
+                .ToList();
 
-            if (_scheduleItemModels == null)
-            {
-                _scheduleItemModels = groupsItems
-                    .OrderBy(e => e.StartTime)
-                    .ThenBy(e => e.SubjectTitle)
-                    .ThenBy(e => e.Group)
-                    .ThenBy(e => e.Teacher)
-                    .ToList();
-            }
+            List<ScheduleItemModel> usersItems = UserList
+                .AsParallel()
+                .Select(GetPersonSchedule)
+                .SelectMany(e => e)
+                .ToList();
+
+            _scheduleItemModels = groupsItems
+                .Concat(usersItems)
+                .OrderBy(e => e.StartTime)
+                .ThenBy(e => e.SubjectTitle)
+                .ThenBy(e => e.Group)
+                .ThenBy(e => e.Teacher)
+                .ToList();
 
             return _scheduleItemModels;
-        }
-
-        private static IEnumerable<ScheduleItemModel> GetScheduleItemModels(string groupTitle)
-        {
-            var provider = new ItmoApiProvider();
-
-            List<ScheduleItemModel> result = provider
-                .ScheduleApi
-                .GetGroupSchedule(groupTitle)
-                .Result
-                .Schedule;
-
-            return result;
         }
 
         private void Print(IEnumerable<ScheduleItemModel> items)

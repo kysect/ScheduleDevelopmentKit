@@ -23,7 +23,7 @@ namespace ScheduleAggregator
 
         public static void Execute(IPrinter printer, IEnumerable<string> groups)
         {
-            var provider = new ScheduleItemProvider(groups.ToList(), printer);
+            var provider = new ScheduleItemProvider(groups.ToList(), new List<int>(), printer);
 
             printer.Print("\t\tLectures");
             provider.PrintLecture();
