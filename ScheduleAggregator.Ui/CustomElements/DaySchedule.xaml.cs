@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using ItmoScheduleApiWrapper.Helpers;
 using ItmoScheduleApiWrapper.Models;
 using ItmoScheduleApiWrapper.Types;
+using ScheduleAggregator.ViewItem;
 
 namespace ScheduleAggregator.Ui.CustomElements
 {
@@ -18,12 +19,20 @@ namespace ScheduleAggregator.Ui.CustomElements
 
             var printableData =
                 currentItems
-                    .Select(e => (e.StartTime, e.SubjectTitle, e.Status, e.Group, e.Teacher))
-                    .Select(t => t.ToString())
-                    .ToList();
+                    .GroupBy(i => (i.StartTime, i.SubjectTitle, i.Teacher))
+                    .Select(ToItem)
+                    .Select(item => item.ToViewString());
 
             InitializeComponent();
             ItemsList.ItemsSource = printableData;
+        }
+
+        private IScheduleIViewItem ToItem(IEnumerable<ScheduleItemModel> items)
+        {
+            var list = items.ToList();
+            if (list.Count == 1)
+                return new SimpleViewItem(list[0]);
+            return new GroupedViewItem(list);
         }
     }
 }
