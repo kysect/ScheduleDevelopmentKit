@@ -13,7 +13,7 @@ namespace ScheduleAggregator.ViewItem
 
         public string ToViewString()
         {
-            return (Model.StartTime, Model.SubjectTitle, Model.Status, Model.Teacher, Model.Group).ToString();
+            return (Model.StartTime, Model.SubjectTitle, Model.Status, Model.ShortTeacherName(), Model.Group).ToString();
         }
     }
 }
