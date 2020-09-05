@@ -17,7 +17,7 @@ namespace ScheduleAggregator.ViewItem
         {
             string groups = string.Join("; ", Models.Select(m => m.Group));
             ScheduleItemModel first = Models[0];
-            return (first.StartTime, first.SubjectTitle, first.Status, first.Teacher, groups).ToString();
+            return (first.StartTime, first.SubjectTitle, first.Status, first.ShortTeacherName(), groups).ToString();
         }
     }
 }
