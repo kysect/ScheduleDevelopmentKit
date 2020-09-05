@@ -9,6 +9,11 @@ namespace ScheduleAggregator
             return model.Status == "Лек";
         }
 
+        public static string ShortSubjectTitle(this ScheduleItemModel model)
+        {
+            return (model.IsLecture() ? "[П] " : "[Л] " ) + model.SubjectTitle;
+        }
+
         public static string ShortTeacherName(this ScheduleItemModel model)
         {
             if (string.IsNullOrEmpty(model.Teacher))

@@ -17,8 +17,29 @@ namespace ScheduleAggregator.Ui
         {
             InitializeComponent();
 
+            //GroupList.Add("M3401");
+            //GroupList.Add("M3402");
+            //GroupList.Add("M3403");
+            //GroupList.Add("M3404");
+            //GroupList.Add("M3405");
+            //GroupList.Add("M3406");
+            //GroupList.Add("M3407");
+            //GroupList.Add("M3408");
+            //GroupList.Add("M3409");
+            //GroupList.Add("M3410");
+
             GroupList.Add("M3101");
+            GroupList.Add("M3102");
+            GroupList.Add("M3103");
+            GroupList.Add("M3104");
+            GroupList.Add("M3105");
+            GroupList.Add("M3106");
             GroupList.Add("M3107");
+            GroupList.Add("M3108");
+            GroupList.Add("M3109");
+            GroupList.Add("M3110");
+            GroupList.Add("M3111");
+            GroupList.Add("M3112");
 
             InitLists();
             
