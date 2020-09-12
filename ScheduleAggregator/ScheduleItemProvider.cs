@@ -40,38 +40,10 @@ namespace ScheduleAggregator
 
             var provider = new ItmoApiProvider();
 
-            IEnumerable<ScheduleItemModel> GetGroupSchedule(string groupTitle) =>
-                provider
-                    .ScheduleApi
-                    .GetGroupSchedule(groupTitle)
-                    .Result
-                    .Schedule;
-
-            IEnumerable<ScheduleItemModel> GetPersonSchedule(int userId) =>
-                provider
-                    .ScheduleApi
-                    .GetPersonSchedule(userId)
-                    .Result
-                    .Schedule;
-
-            List<ScheduleItemModel> groupsItems = GroupList
-                .AsParallel()
-                .Select(GetGroupSchedule)
-                .SelectMany(e => e)
-                .ToList();
-
-            List<ScheduleItemModel> usersItems = UserList
-                .AsParallel()
-                .Select(GetPersonSchedule)
-                .SelectMany(e => e)
-                .ToList();
-
-            _scheduleItemModels = groupsItems
-                .Concat(usersItems)
-                .OrderBy(e => e.StartTime)
-                .ThenBy(e => e.SubjectTitle)
-                .ThenBy(e => e.Group)
-                .ThenBy(e => e.Teacher)
+            _scheduleItemModels = provider.ScheduleApi
+                .GetGroupPackSchedule(GroupList)
+                .Concat(provider.ScheduleApi.GetPersonPackSchedule(UserList))
+                .ScheduleOrder()
                 .ToList();
 
             return _scheduleItemModels;
