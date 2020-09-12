@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ItmoScheduleApiWrapper;
 using ItmoScheduleApiWrapper.Models;
 using ItmoScheduleApiWrapper.Types;
 using ScheduleAggregator.Ui.CustomElements;
@@ -51,26 +53,10 @@ namespace ScheduleAggregator.Ui
         {
             var provider = new ScheduleItemProvider(GroupList, UserIdList, null);
             List<ScheduleItemModel> items = provider.GetItemsForGroup();
+            List<DayScheduleDescriptor> descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
 
-            OddItemList.ItemsSource = new List<DaySchedule>
-            {
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Monday),
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Tuesday),
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Wednesday),
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Thursday),
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Friday),
-                new DaySchedule(items, DataWeekType.Odd, DataDayType.Saturday)
-            };
-
-            EvenItemList.ItemsSource = new List<DaySchedule>
-            {
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Monday),
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Tuesday),
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Wednesday),
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Thursday),
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Friday),
-                new DaySchedule(items, DataWeekType.Even, DataDayType.Saturday)
-            };
+            OddItemList.ItemsSource = descriptors.Where(d => d.DataWeek == DataWeekType.Odd).Select(d => new DaySchedule(d)).ToList();
+            EvenItemList.ItemsSource = descriptors.Where(d => d.DataWeek == DataWeekType.Even).Select(d => new DaySchedule(d)).ToList();
         }
 
         private void GroupAdd_Click(object sender, RoutedEventArgs e)
