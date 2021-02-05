@@ -1,6 +1,6 @@
-﻿using ItmoScheduleApiWrapper.Models;
+﻿using Kysect.ItmoScheduleSdk.Models;
 
-namespace ScheduleAggregator.ViewItem
+namespace ScheduleAggregator.Core.ViewItem
 {
     public class SimpleViewItem : IScheduleIViewItem
     {

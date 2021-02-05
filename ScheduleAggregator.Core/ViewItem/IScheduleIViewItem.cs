@@ -1,4 +1,4 @@
-﻿namespace ScheduleAggregator.ViewItem
+﻿namespace ScheduleAggregator.Core.ViewItem
 {
     public interface IScheduleIViewItem
     {

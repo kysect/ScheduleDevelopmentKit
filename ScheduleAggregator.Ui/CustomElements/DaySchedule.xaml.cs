@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using ItmoScheduleApiWrapper.Models;
-using ScheduleAggregator.ViewItem;
+using Kysect.ItmoScheduleSdk.Models;
+using GroupedViewItem = ScheduleAggregator.Core.ViewItem.GroupedViewItem;
+using IScheduleIViewItem = ScheduleAggregator.Core.ViewItem.IScheduleIViewItem;
+using SimpleViewItem = ScheduleAggregator.Core.ViewItem.SimpleViewItem;
 
 namespace ScheduleAggregator.Ui.CustomElements
 {
