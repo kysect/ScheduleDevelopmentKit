@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ItmoScheduleApiWrapper.Models;
+using Kysect.ItmoScheduleSdk.Models;
 
-namespace ScheduleAggregator.ViewItem
+namespace ScheduleAggregator.Core.ViewItem
 {
     public class GroupedViewItem : IScheduleIViewItem
     {

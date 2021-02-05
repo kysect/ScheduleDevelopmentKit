@@ -3,9 +3,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using ItmoScheduleApiWrapper;
-using ItmoScheduleApiWrapper.Models;
-using ItmoScheduleApiWrapper.Types;
+using Kysect.ItmoScheduleSdk;
+using Kysect.ItmoScheduleSdk.Models;
+using Kysect.ItmoScheduleSdk.Types;
+using ScheduleAggregator.Core.ScheduleItemProviders;
 using ScheduleAggregator.Ui.CustomElements;
 
 namespace ScheduleAggregator.Ui
@@ -51,8 +52,8 @@ namespace ScheduleAggregator.Ui
 
         public void InitLists()
         {
-            var provider = new ScheduleItemProvider(GroupList, UserIdList, null);
-            List<ScheduleItemModel> items = provider.GetItemsForGroup();
+            var provider = new ApiScheduleItemProvider(GroupList, UserIdList);
+            List<ScheduleItemModel> items = provider.GetItems();
             List<DayScheduleDescriptor> descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
 
             OddItemList.ItemsSource = descriptors.Where(d => d.DataWeek == DataWeekType.Odd).Select(d => new DaySchedule(d)).ToList();

@@ -2,12 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ItmoScheduleApiWrapper" Version="1.0.3" />
     <PackageReference Include="morelinq" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduleAggregator.Core\ScheduleAggregator.Core.csproj" />
   </ItemGroup>
 
 </Project>

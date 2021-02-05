@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ScheduleAggregator.Core.ScheduleItemProviders;
 using ScheduleAggregator.Printers;
 
 namespace ScheduleAggregator
@@ -23,13 +24,13 @@ namespace ScheduleAggregator
 
         public static void Execute(IPrinter printer, IEnumerable<string> groups)
         {
-            var provider = new ScheduleItemProvider(groups.ToList(), new List<int>(), printer);
+            var provider = new ApiScheduleItemProvider(groups.ToList(), new List<int>());
 
             printer.Print("\t\tLectures");
-            provider.PrintLecture();
+            printer.PrintLecture(provider);
 
             printer.Print("\n\n\t\tPractice");
-            provider.PrintPractice();
+            printer.PrintPractice(provider);
         }
 
         private static IEnumerable<string> GetTmpGroups()
