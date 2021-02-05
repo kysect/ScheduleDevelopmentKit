@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAggregator", "ScheduleAggregator\ScheduleAggregator.csproj", "{AE91133B-7DDA-4566-8417-03EA95B8F295}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAggregator.Ui", "ScheduleAggregator.Ui\ScheduleAggregator.Ui.csproj", "{BDF20BE0-5BAB-4BCC-A846-9005536776E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleAggregator.UiLegacy", "ScheduleAggregator.UiLegacy\ScheduleAggregator.UiLegacy.csproj", "{BDF20BE0-5BAB-4BCC-A846-9005536776E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleAggregator.Core", "ScheduleAggregator.Core\ScheduleAggregator.Core.csproj", "{0B2297C5-924E-444E-BD23-FCF6D9E4628E}"
 EndProject
