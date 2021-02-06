@@ -16,7 +16,7 @@ namespace ScheduleAggregator.Ui.ViewModels
                 new NavigationViewItem
                 {
                     Icon = new SymbolIcon(Symbol.Home),
-                    Content = "Рассписание",
+                    Content = "Расписание",
                     Tag = NavigationTarget.Schedule,
                     IsSelected = true
                 },
