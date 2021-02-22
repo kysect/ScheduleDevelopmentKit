@@ -9,5 +9,7 @@ namespace ScheduleAggregator.DataModels
 
         public string Name { get; set; }
         public List<Subject> Subjects { get; set; }
+
+        public List<Lesson> Lessons { get; set; }
     }
 }
