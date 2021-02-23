@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -9,12 +10,17 @@ using Kysect.ItmoScheduleSdk.Types;
 using ScheduleAggregator.Core.ScheduleItemProviders;
 using ScheduleAggregator.Ui.CustomElements;
 
+
 namespace ScheduleAggregator.Ui
 {
     public partial class MainWindow : Window
     {
         public ObservableCollection<string> GroupList = new ObservableCollection<string>();
         public ObservableCollection<int> UserIdList = new ObservableCollection<int>();
+
+        private List<DayScheduleDescriptor> descriptors;
+        private TableMasks Masks = new TableMasks();
+
 
         public MainWindow()
         {
@@ -44,8 +50,9 @@ namespace ScheduleAggregator.Ui
             GroupList.Add("M3111");
             GroupList.Add("M3112");
 
+
             InitLists();
-            
+
             AddedGroupList.ItemsSource = GroupList;
             AddedUserList.ItemsSource = UserIdList;
         }
@@ -54,10 +61,32 @@ namespace ScheduleAggregator.Ui
         {
             var provider = new ApiScheduleItemProvider(GroupList, UserIdList);
             List<ScheduleItemModel> items = provider.GetItems();
-            List<DayScheduleDescriptor> descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
+            descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
+            PutMasks();
+        }
 
-            OddItemList.ItemsSource = descriptors.Where(d => d.DataWeek == DataWeekType.Odd).Select(d => new DaySchedule(d)).ToList();
-            EvenItemList.ItemsSource = descriptors.Where(d => d.DataWeek == DataWeekType.Even).Select(d => new DaySchedule(d)).ToList();
+        private void PutMasks()
+        {
+            var Shedule = new List<DayScheduleDescriptor>();
+
+            foreach (var day in descriptors.Where(d => d.DataWeek == Masks.WeekType).ToList())
+            {
+
+                var MaskedScheduleItems = day.ScheduleItems;
+
+                if (Masks.Room != default)
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Room == Masks.Room).ToList();
+                if (Masks.StartTime != default)
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.StartTime == Masks.StartTime).ToList();
+                if (Masks.SubjectTitle != default)
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.SubjectTime == Masks.SubjectTitle).ToList();
+                if (Masks.Teacher != default)
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Teacher == Masks.Teacher).ToList();
+
+                Shedule.Add(new DayScheduleDescriptor(day.DataDay, day.DataWeek, MaskedScheduleItems));
+
+            }
+            ItemList.ItemsSource = Shedule.Select(d => new DaySchedule(d)).ToList();
         }
 
         private void GroupAdd_Click(object sender, RoutedEventArgs e)
@@ -70,11 +99,23 @@ namespace ScheduleAggregator.Ui
             }
         }
 
+
+        private void OddWeek_Checked(object sender, RoutedEventArgs e)
+        {
+            Masks.WeekType = DataWeekType.Odd;
+            PutMasks();
+        }
+        private void EvenWeek_Checked(object sender, RoutedEventArgs e)
+        {
+            Masks.WeekType = DataWeekType.Even;
+            PutMasks();
+        }
+
         private void AddedGroupList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count <= 0)
                 return;
-            
+
             var element = e.AddedItems[0];
             if (GroupList.Contains(element.ToString()))
             {

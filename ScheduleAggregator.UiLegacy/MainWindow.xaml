@@ -5,15 +5,35 @@
     xmlns:customElements="clr-namespace:ScheduleAggregator.Ui.CustomElements"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ScheduleAggregator.Ui"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="MainWindow"
-    Width="1600"
+    Width="888"
     Height="1000"
     mc:Ignorable="d">
-    <StackPanel Orientation="Horizontal">
-        <ListBox Name="OddItemList" Width="600" />
-        <ListBox Name="EvenItemList" Width="600" />
-        <StackPanel>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="888">
+        <ListBox Name="ItemList" Width="600" />
+        <StackPanel Width="292">
+            <materialDesign:ColorZone
+                 Mode="PrimaryMid" Width="191">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="2,0,5,0">
+
+                    <RadioButton
+                          Style="{StaticResource MaterialDesignTabRadioButton}"
+                          Margin="4"
+                          IsChecked="False"
+                          Content="Нечётная"
+                          Checked="OddWeek_Checked"  
+                          />
+                    <RadioButton
+                          Style="{StaticResource MaterialDesignTabRadioButton}"
+                          Margin="4"
+                          IsChecked="False"
+                          Content="Чётная"
+                          Checked="EvenWeek_Checked"/>
+                </StackPanel>
+            </materialDesign:ColorZone>
             <StackPanel Orientation="Horizontal">
                 <TextBox
                     Name="InputGroup"
@@ -21,9 +41,9 @@
                     Text="M3101"
                     TextAlignment="Center" />
                 <Button
-                    Width="50"
+                    Width="75"
                     Click="GroupAdd_Click"
-                    Content="Add" />
+                    Content="Add" Cursor="Hand" />
             </StackPanel>
             <ListBox Name="AddedGroupList" SelectionChanged="AddedGroupList_OnSelectionChanged" />
 
@@ -34,11 +54,14 @@
                     Text="113319"
                     TextAlignment="Center" />
                 <Button
-                    Width="50"
+                    Width="75"
                     Click="UserAdd_OnClick"
                     Content="Add" />
             </StackPanel>
             <ListBox Name="AddedUserList" SelectionChanged="AddedUserList_OnSelectionChanged" />
+
+
+
 
         </StackPanel>
     </StackPanel>
