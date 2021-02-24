@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ScheduleAggregator.Core\ScheduleAggregator.Core.csproj" />
     <ProjectReference Include="..\ScheduleAggregator\ScheduleAggregator.csproj" />
   </ItemGroup>
