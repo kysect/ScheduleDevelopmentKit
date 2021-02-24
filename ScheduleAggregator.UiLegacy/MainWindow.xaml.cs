@@ -19,7 +19,7 @@ namespace ScheduleAggregator.Ui
         public ObservableCollection<int> UserIdList = new ObservableCollection<int>();
 
         private List<DayScheduleDescriptor> descriptors;
-        private TableMasks Masks = new TableMasks();
+        private TableFiltres _filtres = new TableFiltres();
 
 
         public MainWindow()
@@ -62,31 +62,7 @@ namespace ScheduleAggregator.Ui
             var provider = new ApiScheduleItemProvider(GroupList, UserIdList);
             List<ScheduleItemModel> items = provider.GetItems();
             descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
-            PutMasks();
-        }
-
-        private void PutMasks()
-        {
-            var Shedule = new List<DayScheduleDescriptor>();
-
-            foreach (var day in descriptors.Where(d => d.DataWeek == Masks.WeekType).ToList())
-            {
-
-                var MaskedScheduleItems = day.ScheduleItems;
-
-                if (Masks.Room != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Room == Masks.Room).ToList();
-                if (Masks.StartTime != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.StartTime == Masks.StartTime).ToList();
-                if (Masks.SubjectTitle != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.SubjectTime == Masks.SubjectTitle).ToList();
-                if (Masks.Teacher != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Teacher == Masks.Teacher).ToList();
-
-                Shedule.Add(new DayScheduleDescriptor(day.DataDay, day.DataWeek, MaskedScheduleItems));
-
-            }
-            ItemList.ItemsSource = Shedule.Select(d => new DaySchedule(d)).ToList();
+            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
         }
 
         private void GroupAdd_Click(object sender, RoutedEventArgs e)
@@ -102,13 +78,13 @@ namespace ScheduleAggregator.Ui
 
         private void OddWeek_Checked(object sender, RoutedEventArgs e)
         {
-            Masks.WeekType = DataWeekType.Odd;
-            PutMasks();
+            _filtres.WeekType = DataWeekType.Odd;
+            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
         }
         private void EvenWeek_Checked(object sender, RoutedEventArgs e)
         {
-            Masks.WeekType = DataWeekType.Even;
-            PutMasks();
+            _filtres.WeekType = DataWeekType.Even;
+            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
         }
 
         private void AddedGroupList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
