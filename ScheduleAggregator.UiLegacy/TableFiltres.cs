@@ -14,17 +14,14 @@ namespace ScheduleAggregator.Ui
         public string Teacher = default;
         public string SubjectTitle = default;
 
-        public List<DaySchedule> PutMasks(List<DayScheduleDescriptor> descriptors)
+        public List<DaySchedule> Filter(List<DayScheduleDescriptor> descriptors)
         {
-            if (descriptors == null)
-                return null;
 
             var Shedule = new List<DayScheduleDescriptor>();
-
             foreach (var day in descriptors.Where(d => d.DataWeek == WeekType).ToList())
             {
 
-                var MaskedScheduleItems = day.ScheduleItems;
+                IEnumerable<ScheduleItemModel> MaskedScheduleItems = day.ScheduleItems;
 
                 if (Room != default)
                     MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Room == Room).ToList();
@@ -35,7 +32,7 @@ namespace ScheduleAggregator.Ui
                 if (Teacher != default)
                     MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Teacher == Teacher).ToList();
 
-                Shedule.Add(new DayScheduleDescriptor(day.DataDay, day.DataWeek, MaskedScheduleItems));
+                Shedule.Add(new DayScheduleDescriptor(day.DataDay, day.DataWeek, MaskedScheduleItems.ToList()));
 
             }
             return Shedule.Select(d => new DaySchedule(d)).ToList();
