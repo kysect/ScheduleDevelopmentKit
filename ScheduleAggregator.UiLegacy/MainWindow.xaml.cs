@@ -62,7 +62,7 @@ namespace ScheduleAggregator.Ui
             var provider = new ApiScheduleItemProvider(GroupList, UserIdList);
             List<ScheduleItemModel> items = provider.GetItems();
             descriptors = ScheduleApiExtensions.GroupElementsPerDay(items).ToList();
-            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
+            ItemList.ItemsSource = _filtres.Filter(descriptors);
         }
 
         private void GroupAdd_Click(object sender, RoutedEventArgs e)
@@ -79,12 +79,12 @@ namespace ScheduleAggregator.Ui
         private void OddWeek_Checked(object sender, RoutedEventArgs e)
         {
             _filtres.WeekType = DataWeekType.Odd;
-            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
+            ItemList.ItemsSource = _filtres.Filter(descriptors);
         }
         private void EvenWeek_Checked(object sender, RoutedEventArgs e)
         {
             _filtres.WeekType = DataWeekType.Even;
-            ItemList.ItemsSource = _filtres.PutMasks(descriptors);
+            ItemList.ItemsSource = _filtres.Filter(descriptors);
         }
 
         private void AddedGroupList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

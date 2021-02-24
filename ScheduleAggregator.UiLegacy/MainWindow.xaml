@@ -29,7 +29,7 @@
                     <RadioButton
                           Style="{StaticResource MaterialDesignTabRadioButton}"
                           Margin="4"
-                          IsChecked="True"
+                          IsChecked="False"
                           Content="Чётная"
                           Checked="EvenWeek_Checked"/>
                 </StackPanel>
