@@ -24,13 +24,13 @@ namespace ScheduleAggregator.Ui
                 IEnumerable<ScheduleItemModel> MaskedScheduleItems = day.ScheduleItems;
 
                 if (Room != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Room == Room).ToList();
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Room == Room);
                 if (StartTime != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.StartTime == StartTime).ToList();
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.StartTime == StartTime);
                 if (SubjectTitle != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.SubjectTime == SubjectTitle).ToList();
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.SubjectTime == SubjectTitle);
                 if (Teacher != default)
-                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Teacher == Teacher).ToList();
+                    MaskedScheduleItems = MaskedScheduleItems.Where(l => l.Teacher == Teacher);
 
                 Shedule.Add(new DayScheduleDescriptor(day.DataDay, day.DataWeek, MaskedScheduleItems.ToList()));
 
