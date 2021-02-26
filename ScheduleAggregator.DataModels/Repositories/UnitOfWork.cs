@@ -11,7 +11,7 @@ namespace ScheduleAggregator.DataModels.Repositories
 {
     public class UnitOfWork : IDisposable
     {
-        private ScheduleContext db;
+        private ScheduleContext _db;
         public IGenericRepository<LabourIntensity> LabourIntensities { get;private set; }
         public IGenericRepository<Lesson> Lessons { get; private set; }
         public IGenericRepository<Room> Rooms{ get; private set; }
@@ -23,9 +23,9 @@ namespace ScheduleAggregator.DataModels.Repositories
         public IGenericRepository<Teacher> Teachers{ get; private set; }
 
 
-        public UnitOfWork(ScheduleContext db_)
+        public UnitOfWork(ScheduleContext db)
         {
-            db = db_;
+            _db = db;
             LabourIntensities = new GenericRepository<LabourIntensity>(db, db.LabourIntensities);
             Lessons= new GenericRepository<Lesson>(db, db.Lessons);
             Rooms = new GenericRepository<Room>(db, db.Rooms);
@@ -39,11 +39,11 @@ namespace ScheduleAggregator.DataModels.Repositories
 
         public void Save()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
         }
         public Task<int> SaveAsync()
         {
-            return db.SaveChangesAsync();
+            return _db.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -54,7 +54,7 @@ namespace ScheduleAggregator.DataModels.Repositories
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    _db.Dispose();
                 }
                 this.disposed = true;
             }
