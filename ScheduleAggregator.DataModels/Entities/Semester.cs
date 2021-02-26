@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace ScheduleAggregator.DataModels
+namespace ScheduleAggregator.DataModels.Entities
 {
     public class Semester
     {

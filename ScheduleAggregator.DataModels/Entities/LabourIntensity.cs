@@ -1,7 +1,7 @@
 ﻿using System;
 using ScheduleAggregator.DataModels.Enums;
 
-namespace ScheduleAggregator.DataModels
+namespace ScheduleAggregator.DataModels.Entities
 {
     public class LabourIntensity
     {
