@@ -5,6 +5,7 @@ using ScheduleAggregator.DataModels.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
@@ -39,6 +40,10 @@ namespace ScheduleAggregator.DataModels.Repositories
         public void Save()
         {
             db.SaveChanges();
+        }
+        public Task<int> SaveAsync()
+        {
+            return db.SaveChangesAsync();
         }
 
         private bool disposed = false;
