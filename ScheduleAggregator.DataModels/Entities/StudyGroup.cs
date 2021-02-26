@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScheduleAggregator.DataModels
+namespace ScheduleAggregator.DataModels.Entities
 {
     public class StudyGroup
     {
