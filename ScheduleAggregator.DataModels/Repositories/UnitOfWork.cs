@@ -12,7 +12,6 @@ namespace ScheduleAggregator.DataModels.Repositories
     public class UnitOfWork : IDisposable
     {
         private ScheduleContext _db;
-        public IGenericRepository<LabourIntensity> LabourIntensities { get;private set; }
         public IGenericRepository<Lesson> Lessons { get; private set; }
         public IGenericRepository<Room> Rooms{ get; private set; }
         public IGenericRepository<Schedule> Schedules{ get; private set; }
@@ -26,7 +25,6 @@ namespace ScheduleAggregator.DataModels.Repositories
         public UnitOfWork(ScheduleContext db)
         {
             _db = db;
-            LabourIntensities = new GenericRepository<LabourIntensity>(db, db.LabourIntensities);
             Lessons= new GenericRepository<Lesson>(db, db.Lessons);
             Rooms = new GenericRepository<Room>(db, db.Rooms);
             Schedules = new GenericRepository<Schedule>(db, db.Schedules);

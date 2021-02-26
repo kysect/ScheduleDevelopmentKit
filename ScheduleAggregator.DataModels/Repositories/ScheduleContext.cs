@@ -15,7 +15,6 @@ namespace ScheduleAggregator.DataModels.Repositories
         : base(options)
         { }
 
-        public DbSet<LabourIntensity> LabourIntensities{ get; set; }
         public DbSet<Lesson> Lessons{ get; set; }
         public DbSet<Room> Rooms{ get; set; }
         public DbSet<Schedule> Schedules{ get; set; }
