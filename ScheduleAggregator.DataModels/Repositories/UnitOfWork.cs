@@ -41,9 +41,9 @@ namespace ScheduleAggregator.DataModels.Repositories
         {
             _db.SaveChanges();
         }
-        public Task<int> SaveAsync()
+        public async void SaveAsync()
         {
-            return _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
 
         private bool disposed = false;
