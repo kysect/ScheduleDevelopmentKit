@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TryEF.Data.Repositories
+namespace ScheduleAggregator.DataModels.Repositories
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

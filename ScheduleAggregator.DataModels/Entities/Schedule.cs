@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ScheduleAggregator.DataModels
+namespace ScheduleAggregator.DataModels.Entities
 {
     public class Schedule
     {

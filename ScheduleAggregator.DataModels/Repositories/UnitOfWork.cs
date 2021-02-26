@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScheduleAggregator.DataModels;
+using ScheduleAggregator.DataModels.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TryEF.Data.Repositories
+namespace ScheduleAggregator.DataModels.Repositories
 {
     public class UnitOfWork : IDisposable
     {
