@@ -22,13 +22,9 @@ namespace ScheduleAggregator.DataModels.Repositories
         public IGenericRepository<Teacher> Teachers{ get; private set; }
 
 
-        public UnitOfWork()
+        public UnitOfWork(ScheduleContext db_)
         {
-            var options = new DbContextOptionsBuilder<ScheduleContext>()
-            .UseInMemoryDatabase(databaseName: "Test")
-            .Options;
-
-            db = new ScheduleContext(options);
+            db = db_;
             LabourIntensities = new GenericRepository<LabourIntensity>(db, db.LabourIntensities);
             Lessons= new GenericRepository<Lesson>(db, db.Lessons);
             Rooms = new GenericRepository<Room>(db, db.Rooms);
