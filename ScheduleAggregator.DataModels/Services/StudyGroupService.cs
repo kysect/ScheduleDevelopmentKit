@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public void Create(string name)
         {
-            if (UOF..Get(_ => _.Name == name) != null)
+            if (UOF.StudyGroups.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyGroup already exists");
 
             UOF.StudyGroups.Create(new StudyGroup() { Name = name });

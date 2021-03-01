@@ -21,6 +21,7 @@ namespace ScheduleAggregator.DataModels.Repositories
         public IGenericRepository<StudyCourse> StudyCourses{ get; private set; }
         public IGenericRepository<Subject> Subjects{ get; private set; }
         public IGenericRepository<Teacher> Teachers{ get; private set; }
+        public IGenericRepository<StudyGroup> StudyGroups { get; private set; }
 
 
         public UnitOfWork(ScheduleContext db)
@@ -35,6 +36,7 @@ namespace ScheduleAggregator.DataModels.Repositories
             StudyCourses= new GenericRepository<StudyCourse>(db, db.StudyCourses);
             Subjects = new GenericRepository<Subject>(db, db.Subjects);
             Teachers = new GenericRepository<Teacher>(db, db.Teachers);
+            StudyGroups = new GenericRepository<StudyGroup>(db, db.StudyGroups);
         }
 
         public void Save()
