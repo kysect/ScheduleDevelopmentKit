@@ -28,15 +28,16 @@ namespace ScheduleAggregator.DataModels.Repositories
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
-        public TEntity FindById(int id)
+        public TEntity FindById(Guid id)
         {
             return _dbSet.Find(id);
         }
 
-        public void Create(TEntity item)
+        public TEntity Create(TEntity item)
         {
             _dbSet.Add(item);
             _context.SaveChanges();
+            return item;
         }
         public void Update(TEntity item)
         {
