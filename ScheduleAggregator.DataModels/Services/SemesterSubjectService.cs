@@ -15,12 +15,14 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(Subject subject, LabourIntensity labourIntensity)
+        public SemesterSubject Create(Subject subject, LabourIntensity labourIntensity)
         {
             if (_uof.SemesterSubjects.Get(_ => _.Subject == subject) != null)
                 throw new Exception("The SemesterSubject already exists");
 
-            _uof.SemesterSubjects.Create(new SemesterSubject() { Subject = subject, LabourIntensity = labourIntensity});
+            var Out = new SemesterSubject() { Subject = subject, LabourIntensity = labourIntensity };
+            _uof.SemesterSubjects.Create(Out);
+            return Out;
         }
         public void Update(SemesterSubject semesterSubject)
         {

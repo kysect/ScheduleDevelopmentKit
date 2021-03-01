@@ -16,9 +16,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(SemesterSubject subject, LessonType lessonType, StudyGroup group)
+        public Lesson Create(SemesterSubject subject, LessonType lessonType, StudyGroup group)
         {
-            _uof.Lessons.Create(new Lesson() { Subject = subject, LessonType = lessonType, Group = group});
+            var Out = new Lesson() { Subject = subject, LessonType = lessonType, Group = group };
+            _uof.Lessons.Create(Out);
+            return Out;
         }
         public void Update(Lesson lesson)
         {
