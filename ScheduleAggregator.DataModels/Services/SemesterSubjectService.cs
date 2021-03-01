@@ -15,13 +15,17 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Guid Create(Guid subjectID, uint lecture, uint practise, uint laboratory)
+        public Guid Create(Guid subjectID, Guid semesterID, uint lecture, uint practise, uint laboratory)
         {
             if (_uof.SemesterSubjects.Get(_ => _.Subject.Id == subjectID) != null)
                 throw new Exception("The SemesterSubject already exists");
 
             var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practise};
-            var Out = new SemesterSubject() { Subject = _uof.Subjects.FindById(subjectID), LabourIntensity = labourIntensity };
+            var Out = new SemesterSubject() { 
+                Subject = _uof.Subjects.FindById(subjectID),
+                LabourIntensity = labourIntensity,
+                Semester = _uof.Semesters.FindById(semesterID)
+            };
             _uof.SemesterSubjects.Create(Out);
             return Out.Id;
         }
