@@ -7,6 +7,6 @@ namespace ScheduleAggregator.DataModels.Entities
     {
         public Guid Id { get; set; }
 
-        private List<Lesson> Lessons { get; set; }
+        public List<Lesson> Lessons { get; set; }
     }
 }
