@@ -15,12 +15,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public void Create(string name,StudyCourse course)
         {
             if (_uof.StudyGroups.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyGroup already exists");
 
-            _uof.StudyGroups.Create(new StudyGroup() { Name = name });
+            _uof.StudyGroups.Create(new StudyGroup() { Name = name, StudyCourse = course });
         }
         public void Update(StudyGroup studyGroup)
         {

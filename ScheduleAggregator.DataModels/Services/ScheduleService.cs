@@ -15,7 +15,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public void Create()
         {
             _uof.Schedules.Create(new Schedule());
         }

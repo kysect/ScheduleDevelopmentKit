@@ -1,4 +1,5 @@
 ﻿using ScheduleAggregator.DataModels.Entities;
+using ScheduleAggregator.DataModels.Enums;
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public void Create(string name, Campus campus)
         {
-            if (_uof.Rooms.Get(_ => _.Name == name) != null)
-                throw new Exception("The Room already exists");
-
-            _uof.Rooms.Create(new Room() { Name = name });
+            _uof.Rooms.Create(new Room() { Name = name, Campus = campus });
         }
         public void Update(Room room)
         {
