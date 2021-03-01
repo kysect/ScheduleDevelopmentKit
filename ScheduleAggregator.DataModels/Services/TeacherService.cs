@@ -35,16 +35,7 @@ namespace ScheduleAggregator.DataModels.Services
             }
         }
 
-        public void AddLessons(Guid teacherID, Guid lessonID)
-        {
-            var teacher = _uof.Teachers.FindById(teacherID);
-            var lesson = _uof.Lessons.FindById(lessonID);
-            if (!teacher.Lessons.Exists(_ => _.Id == lesson.Id))
-            {
-                teacher.Lessons.Add(lesson);
-                _uof.Teachers.Update(teacher);
-            }
-        }
+
 
         #region SameOperations
 
