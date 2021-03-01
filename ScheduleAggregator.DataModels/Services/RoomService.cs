@@ -16,9 +16,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name, Campus campus)
+        public Room Create(string name, Campus campus)
         {
-            _uof.Rooms.Create(new Room() { Name = name, Campus = campus });
+            var Out = new Room() { Name = name, Campus = campus };
+            _uof.Rooms.Create(Out);
+            return Out;
         }
         public void Update(Room room)
         {

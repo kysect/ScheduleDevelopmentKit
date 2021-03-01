@@ -15,12 +15,14 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public Teacher Create(string name)
         {
             if (_uof.Teachers.Get(_ => _.Name == name) != null)
                 throw new Exception("The Teacher already exists");
 
-            _uof.Teachers.Create(new Teacher() { Name = name });
+            var Out = new Teacher() { Name = name };
+            _uof.Teachers.Create(Out);
+            return Out;
         }
         public void Update(Teacher teacher)
         {

@@ -15,12 +15,14 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public Subject Create(string name)
         {
             if (_uof.Subjects.Get(_ => _.Name == name) != null)
                 throw new Exception("The Subject already exists");
 
-            _uof.Subjects.Create(new Subject() { Name = name });
+            var Out = new Subject() { Name = name };
+            _uof.Subjects.Create(Out);
+            return Out;
         }
         public void Update(Subject subject)
         {
