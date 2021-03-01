@@ -15,40 +15,42 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public StudyCourse Create(string name)
+        public Guid Create(string name)
         {
             if (_uof.StudyCourses.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyCource already exists");
 
             var Out = new StudyCourse() { Name = name };
             _uof.StudyCourses.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(StudyCourse studyCourse)
         {
             _uof.StudyCourses.Update(studyCourse);
         }
 
-        public void AddGroup(StudyCourse course, StudyGroup group)
+        public void AddGroup(Guid courseID, Guid groupID)
         {
-            if (!course.Groups.Exists(_ => _.Id == group.Id))
+            var course = _uof.StudyCourses.FindById(courseID);
+            if (!course.Groups.Exists(_ => _.Id == groupID))
             {
-                course.Groups.Add(group);
+                course.Groups.Add(_uof.StudyGroups.FindById(groupID));
                 _uof.StudyCourses.Update(course);
             }
         }
-        public void AddSemester(StudyCourse course, Semester semester)
+        public void AddSemester(Guid courseID, Guid semesterID)
         {
-            if (!course.Semesters.Exists(_ => _.Id == semester.Id))
+            var course = _uof.StudyCourses.FindById(courseID);
+            if (!course.Semesters.Exists(_ => _.Id == semesterID))
             {
-                course.Semesters.Add(semester);
+                course.Semesters.Add(_uof.Semesters.FindById(semesterID));
                 _uof.StudyCourses.Update(course);
             }
         }
 
         #region SameOperations
 
-        public StudyCourse FindByID(int id)
+        public StudyCourse FindByID(Guid id)
         {
             return _uof.StudyCourses.FindById(id);
         }
@@ -57,9 +59,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.StudyCourses.Get();
         }
-        public void Remove(StudyCourse studyCourse)
+        public void Remove(Guid studyCourseID)
         {
-            _uof.StudyCourses.Remove(studyCourse);
+            _uof.StudyCourses.Remove(_uof.StudyCourses.FindById(studyCourseID));
         }
         #endregion
     }

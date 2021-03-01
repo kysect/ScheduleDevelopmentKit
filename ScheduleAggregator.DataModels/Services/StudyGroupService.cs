@@ -15,14 +15,14 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public StudyGroup Create(string name,StudyCourse course)
-        {
+        public Guid Create(string name, Guid course)
+        { 
             if (_uof.StudyGroups.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyGroup already exists");
 
-            var Out = new StudyGroup() { Name = name, StudyCourse = course };
+            var Out = new StudyGroup() { Name = name, StudyCourse = _uof.StudyCourses.FindById(course) };
             _uof.StudyGroups.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(StudyGroup studyGroup)
         {
@@ -31,7 +31,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         #region SameOperations
 
-        public StudyGroup FindByID(int id)
+        public StudyGroup FindByID(Guid id)
         {
             return _uof.StudyGroups.FindById(id);
         }
@@ -40,9 +40,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.StudyGroups.Get();
         }
-        public void Remove(StudyGroup studyGroup)
+        public void Remove(Guid studyGroupID)
         {
-            _uof.StudyGroups.Remove(studyGroup);
+            _uof.StudyGroups.Remove(_uof.StudyGroups.FindById(studyGroupID));
         }
 
         #endregion

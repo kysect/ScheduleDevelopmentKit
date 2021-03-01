@@ -16,11 +16,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Lesson Create(SemesterSubject subject, LessonType lessonType, StudyGroup group)
+        public Guid Create(Guid subjectID, LessonType lessonType, Guid groupID)
         {
-            var Out = new Lesson() { Subject = subject, LessonType = lessonType, Group = group };
+            var Out = new Lesson() { Subject = _uof.SemesterSubjects.FindById(subjectID), LessonType = lessonType, Group = _uof.StudyGroups.FindById(groupID) };
             _uof.Lessons.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(Lesson lesson)
         {
@@ -28,7 +28,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
 
         #region SameOperations
-        public Lesson FindByID(int id)
+        public Lesson FindByID(Guid id)
         {
             return _uof.Lessons.FindById(id);
         }
@@ -37,9 +37,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Lessons.Get();
         }
-        public void Remove(Lesson lesson)
+        public void Remove(Guid lessonID)
         {
-            _uof.Lessons.Remove(lesson);
+            _uof.Lessons.Remove(_uof.Lessons.FindById(lessonID));
         }
         #endregion
     }

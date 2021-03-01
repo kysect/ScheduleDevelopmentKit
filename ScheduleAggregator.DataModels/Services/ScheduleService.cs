@@ -15,29 +15,30 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Schedule Create()
+        public Guid Create()
         {
             var Out = new Schedule();
             _uof.Schedules.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(Schedule schedule)
         {
             _uof.Schedules.Update(schedule);
         }
 
-        public void AddLesson(Schedule schedule, Lesson lesson)
+        public void AddLesson(Guid scheduleID, Guid lessonID)
         {
-            if (!schedule.Lessons.Exists(_ => _.Id == lesson.Id))
+            var schedule = _uof.Schedules.FindById(scheduleID);
+            if (!schedule.Lessons.Exists(_ => _.Id == lessonID))
             {
-                schedule.Lessons.Add(lesson);
+                schedule.Lessons.Add(_uof.Lessons.FindById(lessonID));
                 _uof.Schedules.Update(schedule);
             }
         }
 
         #region SameOperations
 
-        public Schedule FindByID(int id)
+        public Schedule FindByID(Guid id)
         {
             return _uof.Schedules.FindById(id);
         }
@@ -46,9 +47,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Schedules.Get();
         }
-        public void Remove(Schedule schedule)
+        public void Remove(Guid scheduleID)
         {
-            _uof.Schedules.Remove(schedule);
+            _uof.Schedules.Remove(_uof.Schedules.FindById(scheduleID));
         }
 
         #endregion

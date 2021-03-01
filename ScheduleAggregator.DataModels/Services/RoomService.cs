@@ -16,11 +16,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Room Create(string name, Campus campus)
+        public Guid Create(string name, Campus campus)
         {
             var Out = new Room() { Name = name, Campus = campus };
             _uof.Rooms.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(Room room)
         {
@@ -29,7 +29,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         #region SameOperations
 
-        public Room FindByID(int id)
+        public Room FindByID(Guid id)
         {
             return _uof.Rooms.FindById(id);
         }
@@ -38,9 +38,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Rooms.Get();
         }
-        public void Remove(Room room)
+        public void Remove(Guid roomID)
         {
-            _uof.Rooms.Remove(room);
+            _uof.Rooms.Remove(_uof.Rooms.FindById(roomID));
         }
         #endregion
     }
