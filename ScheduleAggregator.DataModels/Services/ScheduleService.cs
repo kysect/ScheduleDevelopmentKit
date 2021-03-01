@@ -10,34 +10,34 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class ScheduleService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public ScheduleService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            UOF.Schedules.Create(new Schedule());
+            _uof.Schedules.Create(new Schedule());
         }
         public void Update(Schedule schedule)
         {
-            UOF.Schedules.Update(schedule);
+            _uof.Schedules.Update(schedule);
         }
 
         ///
 
         public Schedule FindByID(int id)
         {
-            return UOF.Schedules.FindById(id);
+            return _uof.Schedules.FindById(id);
         }
 
         public IEnumerable<Schedule> Get()
         {
-            return UOF.Schedules.Get();
+            return _uof.Schedules.Get();
         }
         public void Remove(Schedule schedule)
         {
-            UOF.Schedules.Remove(schedule);
+            _uof.Schedules.Remove(schedule);
         }
     }
 }

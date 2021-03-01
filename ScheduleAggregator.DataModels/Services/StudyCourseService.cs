@@ -10,37 +10,37 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class StudyCourseService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public StudyCourseService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            if (UOF.StudyCourses.Get(_ => _.Name == name) != null)
+            if (_uof.StudyCourses.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyCource already exists");
 
-            UOF.StudyCourses.Create(new StudyCourse() { Name = name });
+            _uof.StudyCourses.Create(new StudyCourse() { Name = name });
         }
         public void Update(StudyCourse studyCourse)
         {
-            UOF.StudyCourses.Update(studyCourse);
+            _uof.StudyCourses.Update(studyCourse);
         }
 
         ///
 
         public StudyCourse FindByID(int id)
         {
-            return UOF.StudyCourses.FindById(id);
+            return _uof.StudyCourses.FindById(id);
         }
 
         public IEnumerable<StudyCourse> Get()
         {
-            return UOF.StudyCourses.Get();
+            return _uof.StudyCourses.Get();
         }
         public void Remove(StudyCourse studyCourse)
         {
-            UOF.StudyCourses.Remove(studyCourse);
+            _uof.StudyCourses.Remove(studyCourse);
         }
     }
 }

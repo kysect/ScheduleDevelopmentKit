@@ -10,37 +10,37 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class TeacherService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public TeacherService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            if (UOF.Teachers.Get(_ => _.Name == name) != null)
+            if (_uof.Teachers.Get(_ => _.Name == name) != null)
                 throw new Exception("The Teacher already exists");
 
-            UOF.Teachers.Create(new Teacher() { Name = name });
+            _uof.Teachers.Create(new Teacher() { Name = name });
         }
         public void Update(Teacher teacher)
         {
-            UOF.Teachers.Update(teacher);
+            _uof.Teachers.Update(teacher);
         }
 
         ///
 
         public Teacher FindByID(int id)
         {
-            return UOF.Teachers.FindById(id);
+            return _uof.Teachers.FindById(id);
         }
 
         public IEnumerable<Teacher> Get()
         {
-            return UOF.Teachers.Get();
+            return _uof.Teachers.Get();
         }
         public void Remove(Teacher item)
         {
-            UOF.Teachers.Remove(item);
+            _uof.Teachers.Remove(item);
         }
     }
 }

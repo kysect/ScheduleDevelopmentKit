@@ -10,34 +10,34 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class LessonService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public LessonService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            UOF.Lessons.Create(new Lesson());
+            _uof.Lessons.Create(new Lesson());
         }
         public void Update(Lesson lesson)
         {
-            UOF.Lessons.Update(lesson);
+            _uof.Lessons.Update(lesson);
         }
 
         ///
 
         public Lesson FindByID(int id)
         {
-            return UOF.Lessons.FindById(id);
+            return _uof.Lessons.FindById(id);
         }
 
         public IEnumerable<Lesson> Get()
         {
-            return UOF.Lessons.Get();
+            return _uof.Lessons.Get();
         }
         public void Remove(Lesson lesson)
         {
-            UOF.Lessons.Remove(lesson);
+            _uof.Lessons.Remove(lesson);
         }
     }
 }

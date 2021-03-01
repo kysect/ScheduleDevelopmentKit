@@ -10,37 +10,37 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class StudyGroupService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public StudyGroupService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            if (UOF.StudyGroups.Get(_ => _.Name == name) != null)
+            if (_uof.StudyGroups.Get(_ => _.Name == name) != null)
                 throw new Exception("The StudyGroup already exists");
 
-            UOF.StudyGroups.Create(new StudyGroup() { Name = name });
+            _uof.StudyGroups.Create(new StudyGroup() { Name = name });
         }
         public void Update(StudyGroup studyGroup)
         {
-            UOF.StudyGroups.Update(studyGroup);
+            _uof.StudyGroups.Update(studyGroup);
         }
 
         ///
 
         public StudyGroup FindByID(int id)
         {
-            return UOF.StudyGroups.FindById(id);
+            return _uof.StudyGroups.FindById(id);
         }
 
         public IEnumerable<StudyGroup> Get()
         {
-            return UOF.StudyGroups.Get();
+            return _uof.StudyGroups.Get();
         }
         public void Remove(StudyGroup studyGroup)
         {
-            UOF.StudyGroups.Remove(studyGroup);
+            _uof.StudyGroups.Remove(studyGroup);
         }
     }
 }

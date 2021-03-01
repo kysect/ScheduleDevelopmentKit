@@ -10,34 +10,34 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class LabourIntensityService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public LabourIntensityService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            UOF.LabourIntensities.Create(new LabourIntensity());
+            _uof.LabourIntensities.Create(new LabourIntensity());
         }
         public void Update(LabourIntensity labourIntensity)
         {
-            UOF.LabourIntensities.Update(labourIntensity);
+            _uof.LabourIntensities.Update(labourIntensity);
         }
 
         ///
 
         public LabourIntensity FindByID(int id)
         {
-            return UOF.LabourIntensities.FindById(id);
+            return _uof.LabourIntensities.FindById(id);
         }
 
         public IEnumerable<LabourIntensity> Get()
         {
-            return UOF.LabourIntensities.Get();
+            return _uof.LabourIntensities.Get();
         }
         public void Remove(LabourIntensity labourIntensity)
         {
-            UOF.LabourIntensities.Remove(labourIntensity);
+            _uof.LabourIntensities.Remove(labourIntensity);
         }
     }
 }

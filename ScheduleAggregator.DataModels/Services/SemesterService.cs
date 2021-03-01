@@ -10,37 +10,37 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class SemesterService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public SemesterService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            if (UOF.Semesters.Get(_ => _.Name == name) != null)
+            if (_uof.Semesters.Get(_ => _.Name == name) != null)
                 throw new Exception("The Semester already exists");
 
-            UOF.Semesters.Create(new Semester() { Name = name});
+            _uof.Semesters.Create(new Semester() { Name = name});
         }
         public void Update(Semester semester)
         {
-            UOF.Semesters.Update(semester);
+            _uof.Semesters.Update(semester);
         }
 
         ///
 
         public Semester FindByID(int id)
         {
-            return UOF.Semesters.FindById(id);
+            return _uof.Semesters.FindById(id);
         }
 
         public IEnumerable<Semester> Get()
         {
-            return UOF.Semesters.Get();
+            return _uof.Semesters.Get();
         }
         public void Remove(Semester semester)
         {
-            UOF.Semesters.Remove(semester);
+            _uof.Semesters.Remove(semester);
         }
     }
 }
