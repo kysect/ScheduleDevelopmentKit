@@ -27,6 +27,14 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Semesters.Update(semester);
         }
 
+        public void AddSubject(Semester semester, SemesterSubject subject)
+        {
+            if (!semester.Subjects.Exists(_ => _.Id == subject.Id))
+            {
+                semester.Subjects.Add(subject);
+                _uof.Semesters.Update(semester);
+            }
+        }
         ///
 
         public Semester FindByID(int id)

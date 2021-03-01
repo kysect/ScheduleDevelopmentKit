@@ -27,6 +27,24 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.StudyCourses.Update(studyCourse);
         }
 
+        public void AddGroup(StudyCourse course, StudyGroup group)
+        {
+            if (!course.Groups.Exists(_ => _.Id == group.Id))
+            {
+                course.Groups.Add(group);
+                _uof.StudyCourses.Update(course);
+            }
+        }
+        public void AddSemester(StudyCourse course, Semester semester)
+        {
+            if (!course.Semesters.Exists(_ => _.Id == semester.Id))
+            {
+                course.Semesters.Add(semester);
+                _uof.StudyCourses.Update(course);
+            }
+        }
+
+
         ///
 
         public StudyCourse FindByID(int id)
@@ -42,5 +60,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyCourses.Remove(studyCourse);
         }
+
     }
 }
