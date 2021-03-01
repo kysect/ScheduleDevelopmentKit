@@ -30,7 +30,7 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.SemesterSubjects.Update(semesterSubject);
         }
 
-        ///
+        #region SameOperations
 
         public SemesterSubject FindByID(int id)
         {
@@ -45,5 +45,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.SemesterSubjects.Remove(studyCourse);
         }
+        #endregion 
     }
 }

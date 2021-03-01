@@ -35,7 +35,7 @@ namespace ScheduleAggregator.DataModels.Services
             }
         }
 
-        ///
+        #region SameOperations
 
         public Schedule FindByID(int id)
         {
@@ -50,5 +50,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Schedules.Remove(schedule);
         }
+
+        #endregion
     }
 }

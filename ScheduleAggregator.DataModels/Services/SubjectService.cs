@@ -47,7 +47,7 @@ namespace ScheduleAggregator.DataModels.Services
             }
         }
 
-        ///
+        #region SameOperations
 
         public Subject FindByID(int id)
         {
@@ -62,5 +62,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Subjects.Remove(subject);
         }
+
+        #endregion
     }
 }
