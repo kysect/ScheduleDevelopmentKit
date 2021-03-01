@@ -10,37 +10,37 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class RoomService
     {
-        private UnitOfWork UOF;
+        private UnitOfWork _uof;
         public RoomService(UnitOfWork uof)
         {
-            UOF = uof;
+            _uof = uof;
         }
         public void Create(string name)
         {
-            if (UOF.Rooms.Get(_ => _.Name == name) != null)
+            if (_uof.Rooms.Get(_ => _.Name == name) != null)
                 throw new Exception("The Room already exists");
 
-            UOF.Rooms.Create(new Room() { Name = name });
+            _uof.Rooms.Create(new Room() { Name = name });
         }
         public void Update(Room room)
         {
-            UOF.Rooms.Update(room);
+            _uof.Rooms.Update(room);
         }
 
         ///
 
         public Room FindByID(int id)
         {
-            return UOF.Rooms.FindById(id);
+            return _uof.Rooms.FindById(id);
         }
 
         public IEnumerable<Room> Get()
         {
-            return UOF.Rooms.Get();
+            return _uof.Rooms.Get();
         }
         public void Remove(Room room)
         {
-            UOF.Rooms.Remove(room);
+            _uof.Rooms.Remove(room);
         }
     }
 }
