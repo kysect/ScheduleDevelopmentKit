@@ -1,4 +1,5 @@
 ﻿using ScheduleAggregator.DataModels.Entities;
+using ScheduleAggregator.DataModels.Enums;
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public void Create(SemesterSubject subject, LessonType lessonType, StudyGroup group)
         {
-            _uof.Lessons.Create(new Lesson());
+            _uof.Lessons.Create(new Lesson() { Subject = subject, LessonType = lessonType, Group = group});
         }
         public void Update(Lesson lesson)
         {

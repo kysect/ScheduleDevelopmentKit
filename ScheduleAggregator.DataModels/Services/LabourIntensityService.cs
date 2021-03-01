@@ -15,9 +15,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public void Create(string name)
+        public void Create(uint lecture, uint laboratory, uint practise)
         {
-            _uof.LabourIntensities.Create(new LabourIntensity());
+            _uof.LabourIntensities.Create(new LabourIntensity() { Lecture = lecture, Laboratory = laboratory, Practise = practise});
         }
         public void Update(LabourIntensity labourIntensity)
         {
