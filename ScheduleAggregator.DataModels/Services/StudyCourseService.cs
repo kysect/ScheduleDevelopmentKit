@@ -33,15 +33,6 @@ namespace ScheduleAggregator.DataModels.Services
                 _uof.StudyCourses.Update(course);
             }
         }
-        public void AddSemester(Guid courseID, Guid semesterID)
-        {
-            var course = _uof.StudyCourses.FindById(courseID);
-            if (!course.Semesters.Exists(_ => _.Id == semesterID))
-            {
-                course.Semesters.Add(_uof.Semesters.FindById(semesterID));
-                _uof.StudyCourses.Update(course);
-            }
-        }
 
         #region SameOperations
 
