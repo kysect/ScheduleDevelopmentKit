@@ -24,11 +24,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.StudyCourses.Create(Out);
             return Out.Id;
         }
-        public void Update(StudyCourse studyCourse)
-        {
-            _uof.StudyCourses.Update(studyCourse);
-        }
-
         public void AddGroup(Guid courseID, Guid groupID)
         {
             var course = _uof.StudyCourses.FindById(courseID);

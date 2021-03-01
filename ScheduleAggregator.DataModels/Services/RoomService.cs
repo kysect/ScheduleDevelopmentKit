@@ -22,10 +22,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Rooms.Create(Out);
             return Out.Id;
         }
-        public void Update(Room room)
-        {
-            _uof.Rooms.Update(room);
-        }
 
         #region SameOperations
 

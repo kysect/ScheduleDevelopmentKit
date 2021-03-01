@@ -25,11 +25,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.SemesterSubjects.Create(Out);
             return Out.Id;
         }
-        public void Update(SemesterSubject semesterSubject)
-        {
-            _uof.SemesterSubjects.Update(semesterSubject);
-        }
-
         #region SameOperations
 
         public SemesterSubject FindByID(Guid id)

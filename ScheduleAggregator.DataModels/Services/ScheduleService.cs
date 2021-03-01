@@ -21,11 +21,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Schedules.Create(Out);
             return Out.Id;
         }
-        public void Update(Schedule schedule)
-        {
-            _uof.Schedules.Update(schedule);
-        }
-
         public void AddLesson(Guid scheduleID, Guid lessonID)
         {
             var schedule = _uof.Schedules.FindById(scheduleID);
