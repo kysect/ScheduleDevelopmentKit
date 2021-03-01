@@ -22,10 +22,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Lessons.Create(Out);
             return Out.Id;
         }
-        public void Update(Lesson lesson)
-        {
-            _uof.Lessons.Update(lesson);
-        }
 
         #region SameOperations
         public Lesson FindByID(Guid id)

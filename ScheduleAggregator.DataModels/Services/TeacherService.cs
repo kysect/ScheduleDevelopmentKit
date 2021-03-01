@@ -24,11 +24,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Teachers.Create(Out);
             return Out.Id;
         }
-        public void Update(Teacher teacher)
-        {
-            _uof.Teachers.Update(teacher);
-        }
-
         public void AddSubject(Guid teacherID, Guid subjectID)
         {
             var teacher = _uof.Teachers.FindById(teacherID);

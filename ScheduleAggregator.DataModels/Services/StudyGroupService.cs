@@ -24,11 +24,6 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.StudyGroups.Create(Out);
             return Out.Id;
         }
-        public void Update(StudyGroup studyGroup)
-        {
-            _uof.StudyGroups.Update(studyGroup);
-        }
-
         #region SameOperations
 
         public StudyGroup FindByID(Guid id)
