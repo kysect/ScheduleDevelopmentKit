@@ -15,31 +15,34 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Subject Create(string name)
+        public Guid Create(string name)
         {
             if (_uof.Subjects.Get(_ => _.Name == name) != null)
                 throw new Exception("The Subject already exists");
 
             var Out = new Subject() { Name = name };
             _uof.Subjects.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(Subject subject)
         {
             _uof.Subjects.Update(subject);
         }
 
-        public void AddTeacher(Subject subject, Teacher teacher)
+        public void AddTeacher(Guid subjectID, Guid teacherID)
         {
-            if (!subject.Teachers.Exists(_ => _.Id == teacher.Id))
+            var subject = _uof.Subjects.FindById(subjectID);
+            if (!subject.Teachers.Exists(_ => _.Id == teacherID))
             {
-                subject.Teachers.Add(teacher);
+                subject.Teachers.Add(_uof.Teachers.FindById(teacherID));
                 _uof.Subjects.Update(subject);
             }
         }
 
-        public void AddSemesterSubject(Subject subject, SemesterSubject semesterSubject)
+        public void AddSemesterSubject(Guid subjectID, Guid semesterSubjectID)
         {
+            var subject = _uof.Subjects.FindById(subjectID);
+            var semesterSubject = _uof.SemesterSubjects.FindById(semesterSubjectID);
             if (!subject.SemesterSubjects.Exists(_ => _.Id == semesterSubject.Id))
             {
                 subject.SemesterSubjects.Add(semesterSubject);
@@ -49,7 +52,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         #region SameOperations
 
-        public Subject FindByID(int id)
+        public Subject FindByID(Guid id)
         {
             return _uof.Subjects.FindById(id);
         }
@@ -58,9 +61,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Subjects.Get();
         }
-        public void Remove(Subject subject)
+        public void Remove(Guid subjectID)
         {
-            _uof.Subjects.Remove(subject);
+            _uof.Subjects.Remove(_uof.Subjects.FindById(subjectID));
         }
 
         #endregion

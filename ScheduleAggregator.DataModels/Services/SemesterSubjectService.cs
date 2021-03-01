@@ -15,15 +15,15 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public SemesterSubject Create(Subject subject, uint lecture, uint practise, uint laboratory)
+        public Guid Create(Guid subjectID, uint lecture, uint practise, uint laboratory)
         {
-            if (_uof.SemesterSubjects.Get(_ => _.Subject == subject) != null)
+            if (_uof.SemesterSubjects.Get(_ => _.Subject.Id == subjectID) != null)
                 throw new Exception("The SemesterSubject already exists");
 
             var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practise};
-            var Out = new SemesterSubject() { Subject = subject, LabourIntensity = labourIntensity };
+            var Out = new SemesterSubject() { Subject = _uof.Subjects.FindById(subjectID), LabourIntensity = labourIntensity };
             _uof.SemesterSubjects.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(SemesterSubject semesterSubject)
         {
@@ -32,7 +32,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         #region SameOperations
 
-        public SemesterSubject FindByID(int id)
+        public SemesterSubject FindByID(Guid id)
         {
             return _uof.SemesterSubjects.FindById(id);
         }
@@ -41,9 +41,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.SemesterSubjects.Get();
         }
-        public void Remove(SemesterSubject studyCourse)
+        public void Remove(Guid studyCourseID)
         {
-            _uof.SemesterSubjects.Remove(studyCourse);
+            _uof.SemesterSubjects.Remove(_uof.SemesterSubjects.FindById(studyCourseID));
         }
         #endregion 
     }

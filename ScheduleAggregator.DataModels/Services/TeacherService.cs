@@ -15,22 +15,24 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Teacher Create(string name)
+        public Guid Create(string name)
         {
             if (_uof.Teachers.Get(_ => _.Name == name) != null)
                 throw new Exception("The Teacher already exists");
 
             var Out = new Teacher() { Name = name };
             _uof.Teachers.Create(Out);
-            return Out;
+            return Out.Id;
         }
         public void Update(Teacher teacher)
         {
             _uof.Teachers.Update(teacher);
         }
 
-        public void AddSubject(Teacher teacher, Subject subject)
+        public void AddSubject(Guid teacherID, Guid subjectID)
         {
+            var teacher = _uof.Teachers.FindById(teacherID);
+            var subject = _uof.Subjects.FindById(subjectID);
             if (!teacher.Subjects.Exists(_ => _.Id == subject.Id))
             {
                 teacher.Subjects.Add(subject);
@@ -38,8 +40,10 @@ namespace ScheduleAggregator.DataModels.Services
             }
         }
 
-        public void AddLessons(Teacher teacher, Lesson lesson)
+        public void AddLessons(Guid teacherID, Guid lessonID)
         {
+            var teacher = _uof.Teachers.FindById(teacherID);
+            var lesson = _uof.Lessons.FindById(lessonID);
             if (!teacher.Lessons.Exists(_ => _.Id == lesson.Id))
             {
                 teacher.Lessons.Add(lesson);
@@ -49,7 +53,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         #region SameOperations
 
-        public Teacher FindByID(int id)
+        public Teacher FindByID(Guid id)
         {
             return _uof.Teachers.FindById(id);
         }
@@ -58,9 +62,9 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Teachers.Get();
         }
-        public void Remove(Teacher item)
+        public void Remove(Guid teacherID)
         {
-            _uof.Teachers.Remove(item);
+            _uof.Teachers.Remove(_uof.Teachers.FindById(teacherID));
         }
         #endregion  
     }
