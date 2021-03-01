@@ -27,6 +27,24 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Subjects.Update(subject);
         }
 
+        public void AddTeacher(Subject subject, Teacher teacher)
+        {
+            if (!subject.Teachers.Exists(_ => _.Id == teacher.Id))
+            {
+                subject.Teachers.Add(teacher);
+                _uof.Subjects.Update(subject);
+            }
+        }
+
+        public void AddSemesterSubject(Subject subject, SemesterSubject semesterSubject)
+        {
+            if (!subject.SemesterSubjects.Exists(_ => _.Id == semesterSubject.Id))
+            {
+                subject.SemesterSubjects.Add(semesterSubject);
+                _uof.Subjects.Update(subject);
+            }
+        }
+
         ///
 
         public Subject FindByID(int id)

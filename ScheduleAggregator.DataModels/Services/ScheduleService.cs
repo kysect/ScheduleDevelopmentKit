@@ -24,6 +24,15 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Schedules.Update(schedule);
         }
 
+        public void AddLesson(Schedule schedule, Lesson lesson)
+        {
+            if (!schedule.Lessons.Exists(_ => _.Id == lesson.Id))
+            {
+                schedule.Lessons.Add(lesson);
+                _uof.Schedules.Update(schedule);
+            }
+        }
+
         ///
 
         public Schedule FindByID(int id)
