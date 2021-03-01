@@ -46,7 +46,8 @@ namespace ScheduleAggregator.DataModels.Services
                 _uof.Teachers.Update(teacher);
             }
         }
-        ///
+
+        #region SameOperations
 
         public Teacher FindByID(int id)
         {
@@ -61,5 +62,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Teachers.Remove(item);
         }
+        #endregion  
     }
 }

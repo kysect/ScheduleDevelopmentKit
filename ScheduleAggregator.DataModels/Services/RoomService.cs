@@ -27,7 +27,7 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Rooms.Update(room);
         }
 
-        ///
+        #region SameOperations
 
         public Room FindByID(int id)
         {
@@ -42,5 +42,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Rooms.Remove(room);
         }
+        #endregion
     }
 }

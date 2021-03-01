@@ -46,8 +46,7 @@ namespace ScheduleAggregator.DataModels.Services
             }
         }
 
-
-        ///
+        #region SameOperations
 
         public StudyCourse FindByID(int id)
         {
@@ -62,6 +61,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyCourses.Remove(studyCourse);
         }
-
+        #endregion
     }
 }

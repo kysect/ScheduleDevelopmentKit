@@ -27,8 +27,7 @@ namespace ScheduleAggregator.DataModels.Services
             _uof.Lessons.Update(lesson);
         }
 
-        ///
-
+        #region SameOperations
         public Lesson FindByID(int id)
         {
             return _uof.Lessons.FindById(id);
@@ -42,5 +41,6 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Lessons.Remove(lesson);
         }
+        #endregion
     }
 }
