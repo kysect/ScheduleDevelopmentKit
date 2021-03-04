@@ -16,7 +16,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Guid Create(Guid subjectID, LessonType lessonType, Guid groupID, Guid teacherID, Guid roomID, TimeSlot timeSlot, DaySlot daySlot)
+        public Guid Create(Guid subjectID, LessonType lessonType, Guid groupID, Guid teacherID, Guid roomID, TimeSlot timeSlot, DaySlot daySlot, WeekType weekType)
         {
             var Out = new Lesson() {
                 Subject = _uof.SemesterSubjects.FindById(subjectID),
@@ -25,7 +25,8 @@ namespace ScheduleAggregator.DataModels.Services
                 Teacher = _uof.Teachers.FindById(teacherID),
                 Room = _uof.Rooms.FindById(roomID),
                 TimeSlot = timeSlot,
-                DaySlot = daySlot
+                DaySlot = daySlot,
+                WeekType = weekType
             };
             _uof.Lessons.Create(Out);
             return Out.Id;
