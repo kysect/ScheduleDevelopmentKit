@@ -33,6 +33,15 @@ namespace ScheduleAggregator.DataModels.Services
                 _uof.StudyCourses.Update(course);
             }
         }
+        public void AddSemester(Guid courseID, Guid semesterID)
+        {
+            var course = _uof.StudyCourses.FindById(courseID);
+            if (!course.Semesters.Exists(_ => _.Id == semesterID))
+            {
+                course.Semesters.Add(_uof.Semesters.FindById(semesterID));
+                _uof.StudyCourses.Update(course);
+            }
+        }
 
         #region SameOperations
 
@@ -42,6 +51,10 @@ namespace ScheduleAggregator.DataModels.Services
         }
 
         public IEnumerable<StudyCourse> Get()
+        {
+            return _uof.StudyCourses.Get();
+        }
+        public IEnumerable<StudyCourse> Get(Func<StudyCourse, bool> predicate)
         {
             return _uof.StudyCourses.Get();
         }

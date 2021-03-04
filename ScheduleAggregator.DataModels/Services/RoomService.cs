@@ -34,6 +34,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Rooms.Get();
         }
+        public IEnumerable<Room> Get(Func<Room, bool> predicate)
+        {
+            return _uof.Rooms.Get(predicate);
+        }
         public void Remove(Guid roomID)
         {
             _uof.Rooms.Remove(_uof.Rooms.FindById(roomID));
