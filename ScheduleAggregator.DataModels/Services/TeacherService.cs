@@ -48,6 +48,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Teachers.Get();
         }
+
+        public IEnumerable<Teacher> Get(Func<Teacher, bool> predicate)
+        {
+            return _uof.Teachers.Get();
+        }
         public void Remove(Guid teacherID)
         {
             _uof.Teachers.Remove(_uof.Teachers.FindById(teacherID));
