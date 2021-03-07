@@ -5,9 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Kysect.ItmoScheduleSdk" Version="1.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ScheduleAggregator.Core\ScheduleAggregator.Core.csproj" />
     </ItemGroup>
 
 </Project>
