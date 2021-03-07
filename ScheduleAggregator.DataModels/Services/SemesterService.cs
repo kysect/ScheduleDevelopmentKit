@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name, Guid courseID)
         {
-            if (_uof.Semesters.Get(_ => _.Name == name) != null)
+            if (_uof.Semesters.Get(_ => _.Name == name).Any())
                 throw new Exception("The Semester already exists");
 
             var Out = new Semester() { Name = name, StudyCourse = _uof.StudyCourses.FindById(courseID)};

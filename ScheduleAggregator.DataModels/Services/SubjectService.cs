@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name)
         {
-            if (_uof.Subjects.Get(_ => _.Name == name) != null)
+            if (_uof.Subjects.Get(_ => _.Name == name).Any())
                 throw new Exception("The Subject already exists");
 
             var Out = new Subject() { Name = name };
