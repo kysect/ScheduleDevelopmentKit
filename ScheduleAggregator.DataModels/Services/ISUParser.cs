@@ -187,7 +187,7 @@ namespace ScheduleAggregator.DataModels.Services
                 "17:00" => TimeSlot.Lesson6,
                 "18:40" => TimeSlot.Lesson7,
                 "20:20" => TimeSlot.Lesson8, 
-                _ => throw new ArgumentOutOfRangeException($"Invalid Time")
+                _ => throw new ArgumentOutOfRangeException("Invalid Time")
             };
         }
 
