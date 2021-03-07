@@ -43,11 +43,18 @@ namespace ScheduleAggregator.DataModels.Services
             subjectService = new SubjectService(uof);
             teacherService = new TeacherService(uof);
 
-
             Init();
 
             _provider = new ItmoApiProvider();
             _scheduleItems = _provider.ScheduleApi.GetGroupPackSchedule(studyGroupService.Get().Select(_ => _.Name).ToList());
+
+
+            // На данный момент я не знаю как обращаться с дистанционными предметами
+            // так как у них нет корпуса и аудитории при создании таких предметов возникают сложности
+            // пока просто исключу из расписания
+
+            _scheduleItems.RemoveAll(_ => String.IsNullOrEmpty(_.Room) || String.IsNullOrEmpty(_.Place) || String.IsNullOrEmpty(_.Teacher));
+
         }
         private void Init()
         {
@@ -83,12 +90,10 @@ namespace ScheduleAggregator.DataModels.Services
             foreach (var item in _scheduleItems)
             {
                 string name = item.Room;
-                var campus = GetCampus(item.Place);
+                var campus = ConvertToCampus(item.Place);
 
-                if (roomService.Get(_ => _.Name == name && _.Campus == campus).Any())
-                    return;
-
-                roomService.Create(name, campus);
+                if (!roomService.Get(s => s.Name == name).Any())
+                    roomService.Create(name, campus);
             }
         }
 
@@ -98,22 +103,20 @@ namespace ScheduleAggregator.DataModels.Services
             {
                 string name = item.Teacher;
 
-                if (teacherService.Get(_ => _.Name == name).Any())
-                    return;
-
-                teacherService.Create(name);
+                if (!teacherService.Get(s => s.Name == name).Any())
+                    teacherService.Create(name);
             }
         }
 
         private void ParseSubjects()
         {
+            int i = 0;
             foreach (var item in _scheduleItems)
             {
-                string name = item.SubjectTitle.Split('(')[0];
-
-                if (subjectService.Get(_ => _.Name == name).Any())
-                    return;
-                subjectService.Create(name);
+                string name = item.SubjectTitle;
+                
+                if (!subjectService.Get(s => s.Name == name).Any())
+                    subjectService.Create(name);
             }
         }
 
@@ -130,13 +133,13 @@ namespace ScheduleAggregator.DataModels.Services
         {
             foreach (var item in _scheduleItems)
             {
-                string name = item.SubjectTitle.Split('(')[0];
+                string name = item.SubjectTitle;
                 Guid subjectID = semesterSubjectService.Get(_ => _.Subject.Name == name).First().Id;
-                var lessonType = ConvertToLessonType(Regex.Match($"{item.SubjectTitle}", @"\(([^)]*)\)").Groups[1].Value);
+                var lessonType = ConvertToLessonType(item.Status);
                 Guid teacherID = teacherService.Get(_ => _.Name == item.Teacher).First().Id;
-                Campus campus = GetCampus(item.Place);
+                Campus campus = ConvertToCampus(item.Place);
                 Guid roomID = roomService.Get(_ => _.Name == item.Room && _.Campus == campus).First().Id;
-                var timeSlot = GetTimeSlot(item.SubjectTitle);
+                var timeSlot = ConvertToTimeSlot(item.StartTime);
                 var daySpot = ConvertToDaySlot(item.DataDay);
                 WeekType weekType = ConvertToWeekType(item.DataWeek);
                 Guid groupID = studyGroupService.Get(_ => _.Name == item.Group).First().Id;
@@ -147,6 +150,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         private LessonType ConvertToLessonType(string lesson)
         {
+            lesson = lesson.ToUpper();
             return lesson switch
             {
                 "ЛЕК" => LessonType.Lecture,
@@ -155,8 +159,12 @@ namespace ScheduleAggregator.DataModels.Services
             };
         }
 
-        private Campus GetCampus(string campusName)
+        
+
+        private Campus ConvertToCampus(string campusName)
         {
+            if (String.IsNullOrEmpty(campusName))
+                return Campus.Undefined;
             if (campusName.Contains("Биржевая линия"))
                 return Campus.Birjevaya;
             if (campusName.Contains("Ломоносова"))
@@ -167,11 +175,11 @@ namespace ScheduleAggregator.DataModels.Services
             else return Campus.Undefined;
         }
 
-        private TimeSlot GetTimeSlot(string startTime)
+        private TimeSlot ConvertToTimeSlot(string startTime)
         {
             return startTime switch
             {
-                "8:20" => TimeSlot.Lesson1,
+                "08:20" => TimeSlot.Lesson1,
                 "10:00" => TimeSlot.Lesson2,
                 "11:40" => TimeSlot.Lesson3,
                 "13:30" => TimeSlot.Lesson4,
@@ -179,7 +187,7 @@ namespace ScheduleAggregator.DataModels.Services
                 "17:00" => TimeSlot.Lesson6,
                 "18:40" => TimeSlot.Lesson7,
                 "20:20" => TimeSlot.Lesson8, 
-                _ => throw new ArgumentOutOfRangeException("Invalid Time")
+                _ => throw new ArgumentOutOfRangeException($"Invalid Time")
             };
         }
 
