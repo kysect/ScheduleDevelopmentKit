@@ -36,7 +36,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             var teacher = _uof.Teachers.FindById(teacherID);
             var lesson = _uof.Lessons.FindById(lessonID);
-            if (!teacher.Lessons.Exists(_ => _.Id == lesson.Id))
+            if (!teacher.Lessons.Exists(el => el.Id == lesson.Id))
             {
                 teacher.Lessons.Add(lesson);
                 _uof.Teachers.Update(teacher);

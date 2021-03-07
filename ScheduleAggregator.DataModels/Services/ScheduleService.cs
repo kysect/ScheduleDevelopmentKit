@@ -24,7 +24,7 @@ namespace ScheduleAggregator.DataModels.Services
         public void AddLesson(Guid scheduleID, Guid lessonID)
         {
             var schedule = _uof.Schedules.FindById(scheduleID);
-            if (!schedule.Lessons.Exists(_ => _.Id == lessonID))
+            if (!schedule.Lessons.Exists(el => el.Id == lessonID))
             {
                 schedule.Lessons.Add(_uof.Lessons.FindById(lessonID));
                 _uof.Schedules.Update(schedule);

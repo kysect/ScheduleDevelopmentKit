@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name)
         {
-            if (_uof.StudyCourses.Get(_ => _.Name == name).Any())
+            if (_uof.StudyCourses.Get(el => el.Name == name).Any())
                 throw new Exception("The StudyCource already exists");
 
             var Out = new StudyCourse() { Name = name };
@@ -27,7 +27,7 @@ namespace ScheduleAggregator.DataModels.Services
         public void AddGroup(Guid courseID, Guid groupID)
         {
             var course = _uof.StudyCourses.FindById(courseID);
-            if (!course.Groups.Exists(_ => _.Id == groupID))
+            if (!course.Groups.Exists(el => el.Id == groupID))
             {
                 course.Groups.Add(_uof.StudyGroups.FindById(groupID));
                 _uof.StudyCourses.Update(course);
@@ -36,7 +36,7 @@ namespace ScheduleAggregator.DataModels.Services
         public void AddSemester(Guid courseID, Guid semesterID)
         {
             var course = _uof.StudyCourses.FindById(courseID);
-            if (!course.Semesters.Exists(_ => _.Id == semesterID))
+            if (!course.Semesters.Exists(el => el.Id == semesterID))
             {
                 course.Semesters.Add(_uof.Semesters.FindById(semesterID));
                 _uof.StudyCourses.Update(course);

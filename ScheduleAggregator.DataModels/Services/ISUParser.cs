@@ -46,14 +46,14 @@ namespace ScheduleAggregator.DataModels.Services
             Init();
 
             _provider = new ItmoApiProvider();
-            _scheduleItems = _provider.ScheduleApi.GetGroupPackSchedule(studyGroupService.Get().Select(_ => _.Name).ToList());
+            _scheduleItems = _provider.ScheduleApi.GetGroupPackSchedule(studyGroupService.Get().Select(el => el.Name).ToList());
 
 
             // На данный момент я не знаю как обращаться с дистанционными предметами
             // так как у них нет корпуса и аудитории при создании таких предметов возникают сложности
             // пока просто исключу из расписания
 
-            _scheduleItems.RemoveAll(_ => String.IsNullOrEmpty(_.Room) || String.IsNullOrEmpty(_.Place) || String.IsNullOrEmpty(_.Teacher));
+            _scheduleItems.RemoveAll(el => String.IsNullOrEmpty(el.Room) || String.IsNullOrEmpty(el.Place) || String.IsNullOrEmpty(el.Teacher));
 
         }
         private void Init()
@@ -122,8 +122,8 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void CreateFakeSemesterSubjects()
         {
-            Guid fakeSemesterID = semesterService.Get(_ => _.Name == "Fake_Semester").First().Id;
-            foreach(var subjectID in subjectService.Get().Select(_ => _.Id))
+            Guid fakeSemesterID = semesterService.Get(el => el.Name == "Fake_Semester").First().Id;
+            foreach(var subjectID in subjectService.Get().Select(el => el.Id))
             {
                 semesterSubjectService.Create(subjectID, fakeSemesterID, 0, 0, 0);
             }
@@ -134,15 +134,15 @@ namespace ScheduleAggregator.DataModels.Services
             foreach (var item in _scheduleItems)
             {
                 string name = item.SubjectTitle;
-                Guid subjectID = semesterSubjectService.Get(_ => _.Subject.Name == name).First().Id;
+                Guid subjectID = semesterSubjectService.Get(el => el.Subject.Name == name).First().Id;
                 var lessonType = ConvertToLessonType(item.Status);
-                Guid teacherID = teacherService.Get(_ => _.Name == item.Teacher).First().Id;
+                Guid teacherID = teacherService.Get(el => el.Name == item.Teacher).First().Id;
                 Campus campus = ConvertToCampus(item.Place);
-                Guid roomID = roomService.Get(_ => _.Name == item.Room && _.Campus == campus).First().Id;
+                Guid roomID = roomService.Get(el => el.Name == item.Room && el.Campus == campus).First().Id;
                 var timeSlot = ConvertToTimeSlot(item.StartTime);
                 var daySpot = ConvertToDaySlot(item.DataDay);
                 WeekType weekType = ConvertToWeekType(item.DataWeek);
-                Guid groupID = studyGroupService.Get(_ => _.Name == item.Group).First().Id;
+                Guid groupID = studyGroupService.Get(el => el.Name == item.Group).First().Id;
 
                 lessonService.Create(subjectID, lessonType, groupID, teacherID, roomID, timeSlot, daySpot, weekType);
             }
