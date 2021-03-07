@@ -14,6 +14,7 @@ namespace ScheduleAggregator.DataModels.Entities
         public Room Room { get; set; }
         public TimeSlot TimeSlot { get; set; }
         public DaySlot DaySlot { get; set; }
+        public WeekType WeekType { get; set; }
 
         public StudyGroup Group { get; set; }
     }

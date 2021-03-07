@@ -46,6 +46,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Semesters.Get();
         }
+
+        public IEnumerable<Semester> Get(Func<Semester, bool> predicate)
+        {
+            return _uof.Semesters.Get(predicate);
+        }
+
         public void Remove(Guid semesterID)
         {
             _uof.Semesters.Remove(_uof.Semesters.FindById(semesterID));
