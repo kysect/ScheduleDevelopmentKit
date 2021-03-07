@@ -61,18 +61,18 @@ namespace ScheduleAggregator.DataModels.Services
             Guid course = studyCourseService.Create("Fake_Course");
             semesterService.Create("Fake_Semester", course);
 
-            studyGroupService.Create("M3201", course);
-            studyGroupService.Create("M3202", course);
-            studyGroupService.Create("M3203", course);
-            studyGroupService.Create("M3204", course);
-            studyGroupService.Create("M3205", course);
-            studyGroupService.Create("M3206", course);
-            studyGroupService.Create("M3207", course);
-            studyGroupService.Create("M3208", course);
-            studyGroupService.Create("M3209", course);
-            studyGroupService.Create("M3210", course);
-            studyGroupService.Create("M3211", course);
-            studyGroupService.Create("M3212", course);
+            studyGroupService.Create("M32011", course);
+            studyGroupService.Create("M32021", course);
+            studyGroupService.Create("M32031", course);
+            studyGroupService.Create("M32041", course);
+            studyGroupService.Create("M32051", course);
+            studyGroupService.Create("M32061", course);
+            studyGroupService.Create("M32071", course);
+            studyGroupService.Create("M32081", course);
+            studyGroupService.Create("M32091", course);
+            studyGroupService.Create("M32101", course);
+            studyGroupService.Create("M32111", course);
+            studyGroupService.Create("M32121", course);
         }
 
         public void ParseFromISU()
@@ -122,7 +122,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void CreateFakeSemesterSubjects()
         {
-            Guid fakeSemesterID = semesterService.Get(_ => _.Name == "Fale_Semester").First().Id;
+            Guid fakeSemesterID = semesterService.Get(_ => _.Name == "Fake_Semester").First().Id;
             foreach(var subjectID in subjectService.Get().Select(_ => _.Id))
             {
                 semesterSubjectService.Create(subjectID, fakeSemesterID, 0, 0, 0);
