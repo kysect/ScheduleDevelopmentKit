@@ -59,7 +59,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         public IEnumerable<Subject> Get(Func<Subject, bool> predicate)
         {
-            return _uof.Subjects.Get();
+            return _uof.Subjects.Get(predicate);
         }
         public void Remove(Guid subjectID)
         {
