@@ -38,7 +38,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         public IEnumerable<StudyGroup> Get(Func<StudyGroup, bool> predicate)
         {
-            return _uof.StudyGroups.Get();
+            return _uof.StudyGroups.Get(predicate);
         }
         public void Remove(Guid studyGroupID)
         {

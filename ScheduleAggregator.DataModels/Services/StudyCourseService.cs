@@ -56,7 +56,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public IEnumerable<StudyCourse> Get(Func<StudyCourse, bool> predicate)
         {
-            return _uof.StudyCourses.Get();
+            return _uof.StudyCourses.Get(predicate);
         }
         public void Remove(Guid studyCourseID)
         {
