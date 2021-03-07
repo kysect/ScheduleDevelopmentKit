@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name)
         {
-            if (_uof.Teachers.Get(_ => _.Name == name) != null)
+            if (_uof.Teachers.Get(_ => _.Name == name).Any())
                 throw new Exception("The Teacher already exists");
 
             var Out = new Teacher() { Name = name };
