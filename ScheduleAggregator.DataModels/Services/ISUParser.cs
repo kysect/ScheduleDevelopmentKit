@@ -110,7 +110,6 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void ParseSubjects()
         {
-            int i = 0;
             foreach (var item in _scheduleItems)
             {
                 string name = item.SubjectTitle;
