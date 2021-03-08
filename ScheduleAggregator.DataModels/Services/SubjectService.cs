@@ -65,7 +65,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Subjects.Remove(_uof.Subjects.FindById(subjectID));
         }
-
+        public void Update(Subject subject)
+        {
+            _uof.Subjects.Update(subject);
+        }
         #endregion
     }
 }

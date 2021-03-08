@@ -56,7 +56,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Semesters.Remove(_uof.Semesters.FindById(semesterID));
         }
-
+        public void Update(Semester semester)
+        {
+            _uof.Semesters.Update(semester);
+        }
         #endregion
     }
 }

@@ -45,6 +45,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Rooms.Remove(_uof.Rooms.FindById(roomID));
         }
+        public void Update(Room room)
+        {
+            _uof.Rooms.Update(room);
+        }
         #endregion
     }
 }
