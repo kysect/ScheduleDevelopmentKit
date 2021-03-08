@@ -52,7 +52,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Schedules.Remove(_uof.Schedules.FindById(scheduleID));
         }
-
+        public void Update(Schedule schedule)
+        {
+            _uof.Schedules.Update(schedule);
+        }
         #endregion
     }
 }

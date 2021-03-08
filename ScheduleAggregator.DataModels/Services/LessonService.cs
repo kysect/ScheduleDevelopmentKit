@@ -63,6 +63,11 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Lessons.Remove(_uof.Lessons.FindById(lessonID));
         }
+
+        public void Update(Lesson lesson)
+        {
+            _uof.Lessons.Update(lesson);
+        }
         #endregion
     }
 }
