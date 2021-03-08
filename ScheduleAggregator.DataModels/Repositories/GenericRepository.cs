@@ -26,7 +26,7 @@ namespace ScheduleAggregator.DataModels.Repositories
 
         public IQueryable<TEntity> Get(Func<TEntity, bool> predicate)
         {
-            return (IQueryable<TEntity>)_dbSet.Where(predicate);
+            return _dbSet.Where(predicate).AsQueryable();
         }
         public TEntity FindById(Guid id)
         {
