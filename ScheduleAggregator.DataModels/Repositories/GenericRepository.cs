@@ -19,14 +19,14 @@ namespace ScheduleAggregator.DataModels.Repositories
             _dbSet = set;
         }
 
-        public IEnumerable<TEntity> Get()
+        public IQueryable<TEntity> Get()
         {
-            return _dbSet.ToList();
+            return _dbSet;
         }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        public IQueryable<TEntity> Get(Func<TEntity, bool> predicate)
         {
-            return _dbSet.Where(predicate).ToList();
+            return (IQueryable<TEntity>)_dbSet.Where(predicate);
         }
         public TEntity FindById(Guid id)
         {
