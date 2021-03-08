@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(Guid subjectID, Guid semesterID, uint lecture, uint practise, uint laboratory)
         {
-            if (_uof.SemesterSubjects.Get(_ => _.Subject.Id == subjectID) != null)
+            if (_uof.SemesterSubjects.Get(el => el.Subject.Id == subjectID).Any())
                 throw new Exception("The SemesterSubject already exists");
 
             var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practise};
