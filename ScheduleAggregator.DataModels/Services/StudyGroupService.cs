@@ -44,7 +44,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyGroups.Remove(_uof.StudyGroups.FindById(studyGroupID));
         }
-
+        public void Update(StudyGroup studyGroup)
+        {
+            _uof.StudyGroups.Update(studyGroup);
+        }
         #endregion
     }
 }

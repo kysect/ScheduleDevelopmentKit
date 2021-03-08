@@ -62,6 +62,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyCourses.Remove(_uof.StudyCourses.FindById(studyCourseID));
         }
+        public void Update(StudyCourse studyCourse)
+        {
+            _uof.StudyCourses.Update(studyCourse);
+        }
         #endregion
     }
 }
