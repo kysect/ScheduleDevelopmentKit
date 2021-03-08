@@ -1,4 +1,4 @@
-﻿using ScheduleAggregator.DataModels.Repositories;
+using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -139,11 +139,11 @@ namespace ScheduleAggregator.DataModels.Services
                 Campus campus = ConvertToCampus(item.Place);
                 Guid roomID = roomService.Get(el => el.Name == item.Room && el.Campus == campus).First().Id;
                 var timeSlot = ConvertToTimeSlot(item.StartTime);
-                var daySpot = ConvertToDaySlot(item.DataDay);
+                var daySlot = ConvertToDaySlot(item.DataDay);
                 WeekType weekType = ConvertToWeekType(item.DataWeek);
                 Guid groupID = studyGroupService.Get(el => el.Name == item.Group).First().Id;
 
-                lessonService.Create(subjectID, lessonType, groupID, teacherID, roomID, timeSlot, daySpot, weekType);
+                lessonService.Create(subjectID, lessonType, groupID, teacherID, roomID, timeSlot, daySlot, weekType);
             }
         }
 
