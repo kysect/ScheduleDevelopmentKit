@@ -18,6 +18,9 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name, Campus campus)
         {
+            if (_uof.Rooms.Get(el => el.Name == name && el.Campus == campus).Any())
+                throw new Exception("The Room already exists");
+
             var Out = new Room() { Name = name, Campus = campus };
             _uof.Rooms.Create(Out);
             return Out.Id;

@@ -17,7 +17,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name, Guid course)
         { 
-            if (_uof.StudyGroups.Get(_ => _.Name == name) != null)
+            if (_uof.StudyGroups.Get(el => el.Name == name).Any())
                 throw new Exception("The StudyGroup already exists");
 
             var Out = new StudyGroup() { Name = name, StudyCourse = _uof.StudyCourses.FindById(course) };
@@ -38,7 +38,7 @@ namespace ScheduleAggregator.DataModels.Services
 
         public IEnumerable<StudyGroup> Get(Func<StudyGroup, bool> predicate)
         {
-            return _uof.StudyGroups.Get();
+            return _uof.StudyGroups.Get(predicate);
         }
         public void Remove(Guid studyGroupID)
         {
