@@ -15,7 +15,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name)
         {
-            if (_uof.Teachers.Get(el => el.Name == name).Any())
+            if (_uof.Teachers.Get().Any(el => el.Name == name))
                 throw new Exception("The Teacher already exists");
 
             var Out = new Teacher() { Name = name };
@@ -46,15 +46,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Teachers.Get();
         }
+        
+        public void Remove(Guid teacherId)
+        {
+            _uof.Teachers.Remove(_uof.Teachers.FindById(teacherId));
+        }
 
-        public IEnumerable<Teacher> Get(Func<Teacher, bool> predicate)
-        {
-            return _uof.Teachers.Get(predicate);
-        }
-        public void Remove(Guid teacherID)
-        {
-            _uof.Teachers.Remove(_uof.Teachers.FindById(teacherID));
-        }
         public void Update(Teacher teacher)
         {
             _uof.Teachers.Update(teacher);

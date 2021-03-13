@@ -39,16 +39,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Schedules.Get();
         }
-
-        public IEnumerable<Schedule> Get(Func<Schedule, bool> predicate)
+        
+        public void Remove(Guid scheduleId)
         {
-            return _uof.Schedules.Get(predicate);
+            _uof.Schedules.Remove(_uof.Schedules.FindById(scheduleId));
         }
 
-        public void Remove(Guid scheduleID)
-        {
-            _uof.Schedules.Remove(_uof.Schedules.FindById(scheduleID));
-        }
         public void Update(Schedule schedule)
         {
             _uof.Schedules.Update(schedule);

@@ -15,7 +15,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(Guid subjectID, Guid semesterID, uint lecture, uint practise, uint laboratory)
         {
-            if (_uof.SemesterSubjects.Get(el => el.Subject.Id == subjectID).Any())
+            if (_uof.SemesterSubjects.Get().Any(el => el.Subject.Id == subjectID))
                 throw new Exception("The SemesterSubject already exists");
 
             var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practise};
@@ -39,15 +39,11 @@ namespace ScheduleAggregator.DataModels.Services
             return _uof.SemesterSubjects.Get();
         }
 
-        public IEnumerable<SemesterSubject> Get(Func<SemesterSubject, bool> predicate)
+        public void Remove(Guid studyCourseId)
         {
-            return _uof.SemesterSubjects.Get(predicate);
+            _uof.SemesterSubjects.Remove(_uof.SemesterSubjects.FindById(studyCourseId));
         }
-
-        public void Remove(Guid studyCourseID)
-        {
-            _uof.SemesterSubjects.Remove(_uof.SemesterSubjects.FindById(studyCourseID));
-        }
+        
         public void Update(SemesterSubject semesterSubject)
         {
             _uof.SemesterSubjects.Update(semesterSubject);
