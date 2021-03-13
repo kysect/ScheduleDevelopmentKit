@@ -1,22 +1,15 @@
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using Kysect.ItmoScheduleSdk;
 using Kysect.ItmoScheduleSdk.Models;
 using Kysect.ItmoScheduleSdk.Types;
-using ScheduleAggregator.Core.ScheduleItemProviders;
 using ScheduleAggregator.DataModels.Enums;
-using ScheduleAggregator.DataModels.Entities;
-using System.Text.RegularExpressions;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class ISUParser
+    public class IsuParser
     {
         private LessonService lessonService;
         private RoomService roomService;
@@ -28,10 +21,10 @@ namespace ScheduleAggregator.DataModels.Services
         private SubjectService subjectService;
         private TeacherService teacherService;
 
-        private ItmoApiProvider _provider = new ItmoApiProvider();
-        private List<ScheduleItemModel> _scheduleItems = new List<ScheduleItemModel>();
+        private readonly ItmoApiProvider _provider;
+        private readonly List<ScheduleItemModel> _scheduleItems;
 
-        public ISUParser(UnitOfWork uof)
+        public IsuParser(UnitOfWork uof)
         {
             lessonService = new LessonService(uof);
             roomService = new RoomService(uof);
