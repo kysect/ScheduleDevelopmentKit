@@ -20,12 +20,6 @@ namespace ScheduleAggregator.DataModels.Repositories
             return _dbSet;
         }
 
-        public IQueryable<TEntity> Get(Func<TEntity, bool> predicate)
-        {
-            //TODO: remove cast
-            return _dbSet.Where(predicate).AsQueryable();
-        }
-
         public TEntity FindById(Guid id)
         {
             return _dbSet.Find(id);
@@ -43,6 +37,7 @@ namespace ScheduleAggregator.DataModels.Repositories
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);

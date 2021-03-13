@@ -16,7 +16,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name, Campus campus)
         {
-            if (_uof.Rooms.Get(el => el.Name == name && el.Campus == campus).Any())
+            if (_uof.Rooms.Get().Any(el => el.Name == name && el.Campus == campus))
                 throw new Exception("The Room already exists");
 
             var Out = new Room() { Name = name, Campus = campus };
@@ -35,14 +35,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Rooms.Get();
         }
-        public IEnumerable<Room> Get(Func<Room, bool> predicate)
-        {
-            return _uof.Rooms.Get(predicate);
-        }
+        
         public void Remove(Guid roomID)
         {
             _uof.Rooms.Remove(_uof.Rooms.FindById(roomID));
         }
+
         public void Update(Room room)
         {
             _uof.Rooms.Update(room);
