@@ -3,15 +3,13 @@ using ScheduleAggregator.DataModels.Enums;
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Services
 {
     public class LessonService
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public LessonService(UnitOfWork uof)
         {
             _uof = uof;

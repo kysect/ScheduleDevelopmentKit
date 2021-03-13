@@ -22,5 +22,4 @@ namespace ScheduleAggregator.DataModels.Enums
                 _ => throw new ArgumentOutOfRangeException(nameof(campus), campus, null)
             };
     }
-    
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
 namespace ScheduleAggregator.DataModels.Entities
 {
@@ -8,7 +7,7 @@ namespace ScheduleAggregator.DataModels.Entities
     {
         public Guid Id { get; set; }
 
-        public string Name;
+        public string Name { get; set; }
         public List<SemesterSubject> Subjects { get; set; }
 
         public StudyCourse StudyCourse { get; set; }

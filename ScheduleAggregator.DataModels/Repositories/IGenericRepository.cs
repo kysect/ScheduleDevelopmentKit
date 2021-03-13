@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
@@ -11,6 +8,7 @@ namespace ScheduleAggregator.DataModels.Repositories
         TEntity Create(TEntity item);
         TEntity FindById(Guid id);
         IQueryable<TEntity> Get();
+        //TODO: change signature
         IQueryable<TEntity> Get(Func<TEntity, bool> predicate);
         void Remove(TEntity item);
         void Update(TEntity item);
