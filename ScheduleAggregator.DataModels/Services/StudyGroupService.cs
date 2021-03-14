@@ -3,28 +3,30 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class StudyGroupService
+    public class StudyGroupService : IService<StudyGroup>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public StudyGroupService(UnitOfWork uof)
         {
             _uof = uof;
         }
+
         public Guid Create(string name, Guid course)
         { 
-            if (_uof.StudyGroups.Get().Any(el => el.Name == name))
+            if (_uof.StudyGroups.Get().Any(g => g.Name == name))
                 throw new Exception("The StudyGroup already exists");
 
-            var Out = new StudyGroup() { Name = name, StudyCourse = _uof.StudyCourses.FindById(course) };
-            _uof.StudyGroups.Create(Out);
-            return Out.Id;
+            var result = new StudyGroup() { Name = name, StudyCourse = _uof.StudyCourses.FindById(course) };
+            _uof.StudyGroups.Create(result);
+            return result.Id;
         }
-        #region SameOperations
 
-        public StudyGroup FindByID(Guid id)
+        public StudyGroup FindById(Guid id)
         {
             return _uof.StudyGroups.FindById(id);
         }
@@ -43,6 +45,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyGroups.Update(studyGroup);
         }
-        #endregion
     }
 }

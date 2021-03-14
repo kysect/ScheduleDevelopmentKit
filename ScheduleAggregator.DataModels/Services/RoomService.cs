@@ -4,29 +4,30 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class RoomService
+    public class RoomService : IService<Room>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public RoomService(UnitOfWork uof)
         {
             _uof = uof;
         }
+
         public Guid Create(string name, Campus campus)
         {
-            if (_uof.Rooms.Get().Any(el => el.Name == name && el.Campus == campus))
+            if (_uof.Rooms.Get().Any(r => r.Name == name && r.Campus == campus))
                 throw new Exception("The Room already exists");
 
-            var Out = new Room() { Name = name, Campus = campus };
-            _uof.Rooms.Create(Out);
-            return Out.Id;
+            var result = new Room() { Name = name, Campus = campus };
+            _uof.Rooms.Create(result);
+            return result.Id;
         }
 
-        #region SameOperations
-
-        public Room FindByID(Guid id)
+        public Room FindById(Guid id)
         {
             return _uof.Rooms.FindById(id);
         }
@@ -36,15 +37,14 @@ namespace ScheduleAggregator.DataModels.Services
             return _uof.Rooms.Get();
         }
         
-        public void Remove(Guid roomID)
+        public void Remove(Guid roomId)
         {
-            _uof.Rooms.Remove(_uof.Rooms.FindById(roomID));
+            _uof.Rooms.Remove(_uof.Rooms.FindById(roomId));
         }
 
         public void Update(Room room)
         {
             _uof.Rooms.Update(room);
         }
-        #endregion
     }
 }
