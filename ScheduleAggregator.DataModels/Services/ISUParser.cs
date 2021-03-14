@@ -150,9 +150,9 @@ namespace ScheduleAggregator.DataModels.Services
 
         private Campus ConvertToCampus(string campusName)
         {
-            if (String.IsNullOrEmpty(campusName))
+            if (string.IsNullOrEmpty(campusName))
                 return Campus.Undefined;
-            if (campusName.Contains("Биржевая линия"))
+            if (campusName.Contains("Биржевая"))
                 return Campus.Birjevaya;
             if (campusName.Contains("Ломоносова"))
                 return Campus.Lomonosova;
