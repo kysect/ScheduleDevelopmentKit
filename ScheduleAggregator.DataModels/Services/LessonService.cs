@@ -3,10 +3,11 @@ using ScheduleAggregator.DataModels.Enums;
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class LessonService
+    public class LessonService : IService<Lesson>
     {
         private readonly UnitOfWork _uof;
 
@@ -14,35 +15,35 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof = uof;
         }
-        public Guid Create(Guid subjectID, LessonType lessonType, Guid groupID, Guid teacherID, Guid roomID, TimeSlot timeSlot, DaySlot daySlot, WeekType weekType)
+
+        public Guid Create(Guid subjectId, LessonType lessonType, Guid groupId, Guid teacherId, Guid roomId, TimeSlot timeSlot, DaySlot daySlot, WeekType weekType)
         {
-            var Out = new Lesson() {
-                Subject = _uof.SemesterSubjects.FindById(subjectID),
+            var result = new Lesson() {
+                Subject = _uof.SemesterSubjects.FindById(subjectId),
                 LessonType = lessonType,
-                Group = _uof.StudyGroups.FindById(groupID),
-                Teacher = _uof.Teachers.FindById(teacherID),
-                Room = _uof.Rooms.FindById(roomID),
+                Group = _uof.StudyGroups.FindById(groupId),
+                Teacher = _uof.Teachers.FindById(teacherId),
+                Room = _uof.Rooms.FindById(roomId),
                 TimeSlot = timeSlot,
                 DaySlot = daySlot,
                 WeekType = weekType
             };
-            _uof.Lessons.Create(Out);
-            return Out.Id;
+            _uof.Lessons.Create(result);
+            return result.Id;
         }
 
-        public void AssignLessonToTeacher(Guid teacherID, Guid lessonID)
+        public void AssignLessonToTeacher(Guid teacherId, Guid lessonId)
         {
-            var teacher = _uof.Teachers.FindById(teacherID);
-            var lesson = _uof.Lessons.FindById(lessonID);
-            if (!teacher.Lessons.Exists(el => el.Id == lesson.Id))
+            var teacher = _uof.Teachers.FindById(teacherId);
+            var lesson = _uof.Lessons.FindById(lessonId);
+            if (!teacher.Lessons.Exists(l => l.Id == lesson.Id))
             {
                 teacher.Lessons.Add(lesson);
                 _uof.Teachers.Update(teacher);
             }
         }
 
-        #region SameOperations
-        public Lesson FindByID(Guid id)
+        public Lesson FindById(Guid id)
         {
             return _uof.Lessons.FindById(id);
         }
@@ -51,7 +52,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Lessons.Get();
         }
-        
+
         public void Remove(Guid lessonId)
         {
             _uof.Lessons.Remove(_uof.Lessons.FindById(lessonId));
@@ -61,6 +62,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Lessons.Update(lesson);
         }
-        #endregion
     }
 }

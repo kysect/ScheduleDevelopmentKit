@@ -3,47 +3,50 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class StudyCourseService
+    public class StudyCourseService : IService<StudyCourse>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public StudyCourseService(UnitOfWork uof)
         {
             _uof = uof;
         }
+
         public Guid Create(string name)
         {
-            if (_uof.StudyCourses.Get().Any(el => el.Name == name))
-                throw new Exception("The StudyCource already exists");
+            if (_uof.StudyCourses.Get().Any(c => c.Name == name))
+                throw new Exception("The StudyCourse already exists");
 
-            var Out = new StudyCourse() { Name = name };
-            _uof.StudyCourses.Create(Out);
-            return Out.Id;
+            var result = new StudyCourse() { Name = name };
+            _uof.StudyCourses.Create(result);
+            return result.Id;
         }
-        public void AddGroup(Guid courseID, Guid groupID)
+
+        public void AddGroup(Guid courseId, Guid groupId)
         {
-            var course = _uof.StudyCourses.FindById(courseID);
-            if (!course.Groups.Exists(el => el.Id == groupID))
+            var course = _uof.StudyCourses.FindById(courseId);
+            if (!course.Groups.Exists(g => g.Id == groupId))
             {
-                course.Groups.Add(_uof.StudyGroups.FindById(groupID));
-                _uof.StudyCourses.Update(course);
-            }
-        }
-        public void AddSemester(Guid courseID, Guid semesterID)
-        {
-            var course = _uof.StudyCourses.FindById(courseID);
-            if (!course.Semesters.Exists(el => el.Id == semesterID))
-            {
-                course.Semesters.Add(_uof.Semesters.FindById(semesterID));
+                course.Groups.Add(_uof.StudyGroups.FindById(groupId));
                 _uof.StudyCourses.Update(course);
             }
         }
 
-        #region SameOperations
+        public void AddSemester(Guid courseId, Guid semesterId)
+        {
+            var course = _uof.StudyCourses.FindById(courseId);
+            if (!course.Semesters.Exists(s => s.Id == semesterId))
+            {
+                course.Semesters.Add(_uof.Semesters.FindById(semesterId));
+                _uof.StudyCourses.Update(course);
+            }
+        }
 
-        public StudyCourse FindByID(Guid id)
+        public StudyCourse FindById(Guid id)
         {
             return _uof.StudyCourses.FindById(id);
         }
@@ -62,6 +65,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.StudyCourses.Update(studyCourse);
         }
-        #endregion
     }
 }
