@@ -3,49 +3,51 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class SubjectService
+    public class SubjectService : IService<Subject>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public SubjectService(UnitOfWork uof)
         {
             _uof = uof;
         }
+
         public Guid Create(string name)
         {
-            if (_uof.Subjects.Get().Any(el => el.Name == name))
+            if (_uof.Subjects.Get().Any(s => s.Name == name))
                 throw new Exception("The Subject already exists");
 
-            var Out = new Subject() { Name = name };
-            _uof.Subjects.Create(Out);
-            return Out.Id;
+            var result = new Subject() { Name = name };
+            _uof.Subjects.Create(result);
+            return result.Id;
         }
-        public void AddTeacher(Guid subjectID, Guid teacherID)
+
+        public void AddTeacher(Guid subjectId, Guid teacherId)
         {
-            var subject = _uof.Subjects.FindById(subjectID);
-            if (!subject.Teachers.Exists(el => el.Id == teacherID))
+            var subject = _uof.Subjects.FindById(subjectId);
+            if (!subject.Teachers.Exists(t => t.Id == teacherId))
             {
-                subject.Teachers.Add(_uof.Teachers.FindById(teacherID));
+                subject.Teachers.Add(_uof.Teachers.FindById(teacherId));
                 _uof.Subjects.Update(subject);
             }
         }
 
-        public void AddSemesterSubject(Guid subjectID, Guid semesterSubjectID)
+        public void AddSemesterSubject(Guid subjectId, Guid semesterSubjectId)
         {
-            var subject = _uof.Subjects.FindById(subjectID);
-            var semesterSubject = _uof.SemesterSubjects.FindById(semesterSubjectID);
-            if (!subject.SemesterSubjects.Exists(el => el.Id == semesterSubject.Id))
+            var subject = _uof.Subjects.FindById(subjectId);
+            var semesterSubject = _uof.SemesterSubjects.FindById(semesterSubjectId);
+            if (!subject.SemesterSubjects.Exists(s => s.Id == semesterSubject.Id))
             {
                 subject.SemesterSubjects.Add(semesterSubject);
                 _uof.Subjects.Update(subject);
             }
         }
 
-        #region SameOperations
-
-        public Subject FindByID(Guid id)
+        public Subject FindById(Guid id)
         {
             return _uof.Subjects.FindById(id);
         }
@@ -64,6 +66,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Subjects.Update(subject);
         }
-        #endregion
     }
 }

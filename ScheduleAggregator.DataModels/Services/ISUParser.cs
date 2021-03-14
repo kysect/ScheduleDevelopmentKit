@@ -11,15 +11,15 @@ namespace ScheduleAggregator.DataModels.Services
 {
     public class IsuParser
     {
-        private LessonService lessonService;
-        private RoomService roomService;
-        private ScheduleService scheduleServide;
-        private SemesterService semesterService;
-        private SemesterSubjectService semesterSubjectService;
-        private StudyCourseService studyCourseService;
-        private StudyGroupService studyGroupService;
-        private SubjectService subjectService;
-        private TeacherService teacherService;
+        private readonly LessonService lessonService;
+        private readonly RoomService roomService;
+        private readonly ScheduleService scheduleService;
+        private readonly SemesterService semesterService;
+        private readonly SemesterSubjectService semesterSubjectService;
+        private readonly StudyCourseService studyCourseService;
+        private readonly StudyGroupService studyGroupService;
+        private readonly SubjectService subjectService;
+        private readonly TeacherService teacherService;
 
         private readonly ItmoApiProvider _provider;
         private readonly List<ScheduleItemModel> _scheduleItems;
@@ -28,7 +28,7 @@ namespace ScheduleAggregator.DataModels.Services
         {
             lessonService = new LessonService(uof);
             roomService = new RoomService(uof);
-            scheduleServide = new ScheduleService(uof);
+            scheduleService = new ScheduleService(uof);
             semesterService = new SemesterService(uof);
             semesterSubjectService = new SemesterSubjectService(uof);
             studyCourseService = new StudyCourseService(uof);
@@ -41,14 +41,11 @@ namespace ScheduleAggregator.DataModels.Services
             _provider = new ItmoApiProvider();
             _scheduleItems = _provider.ScheduleApi.GetGroupPackSchedule(studyGroupService.Get().Select(el => el.Name).ToList());
 
-
-            // На данный момент я не знаю как обращаться с дистанционными предметами
-            // так как у них нет корпуса и аудитории при создании таких предметов возникают сложности
-            // пока просто исключу из расписания
-
+            // TODO: https://github.com/kysect/ScheduleAggregator/issues/27
             _scheduleItems.RemoveAll(el => String.IsNullOrEmpty(el.Room) || String.IsNullOrEmpty(el.Place) || String.IsNullOrEmpty(el.Teacher));
 
         }
+
         private void Init()
         {
             Guid course = studyCourseService.Create("Fake_Course");
@@ -65,10 +62,10 @@ namespace ScheduleAggregator.DataModels.Services
             studyGroupService.Create("M32091", course);
             studyGroupService.Create("M32101", course);
             studyGroupService.Create("M32111", course);
-            studyGroupService.Create("M32121", course);
+            studyGroupService.Create("M32122", course);
         }
 
-        public void ParseFromISU()
+        public void ParseFromIsu()
         {
             ParseRooms();
             ParseTeachers();
@@ -113,10 +110,10 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void CreateFakeSemesterSubjects()
         {
-            Guid fakeSemesterID = semesterService.Get().First(el => el.Name == "Fake_Semester").Id;
-            foreach(var subjectID in subjectService.Get().Select(el => el.Id))
+            Guid fakeSemesterId = semesterService.Get().First(el => el.Name == "Fake_Semester").Id;
+            foreach(Guid subjectId in subjectService.Get().Select(el => el.Id))
             {
-                semesterSubjectService.Create(subjectID, fakeSemesterID, 0, 0, 0);
+                semesterSubjectService.Create(subjectId, fakeSemesterId, 0, 0, 0);
             }
         }
 
@@ -125,17 +122,17 @@ namespace ScheduleAggregator.DataModels.Services
             foreach (var item in _scheduleItems)
             {
                 string name = item.SubjectTitle;
-                Guid subjectID = semesterSubjectService.Get().First(el => el.Subject.Name == name).Id;
-                var lessonType = ConvertToLessonType(item.Status);
-                Guid teacherID = teacherService.Get().First(el => el.Name == item.Teacher).Id;
+                Guid subjectId = semesterSubjectService.Get().First(el => el.Subject.Name == name).Id;
+                LessonType lessonType = ConvertToLessonType(item.Status);
+                Guid teacherId = teacherService.Get().First(el => el.Name == item.Teacher).Id;
                 Campus campus = ConvertToCampus(item.Place);
-                Guid roomID = roomService.Get().First(el => el.Name == item.Room && el.Campus == campus).Id;
-                var timeSlot = ConvertToTimeSlot(item.StartTime);
-                var daySlot = ConvertToDaySlot(item.DataDay);
+                Guid roomId = roomService.Get().First(el => el.Name == item.Room && el.Campus == campus).Id;
+                TimeSlot timeSlot = ConvertToTimeSlot(item.StartTime);
+                DaySlot daySlot = ConvertToDaySlot(item.DataDay);
                 WeekType weekType = ConvertToWeekType(item.DataWeek);
-                Guid groupID = studyGroupService.Get().First(el => el.Name == item.Group).Id;
+                Guid groupId = studyGroupService.Get().First(el => el.Name == item.Group).Id;
 
-                lessonService.Create(subjectID, lessonType, groupID, teacherID, roomID, timeSlot, daySlot, weekType);
+                lessonService.Create(subjectId, lessonType, groupId, teacherId, roomId, timeSlot, daySlot, weekType);
             }
         }
 
@@ -146,24 +143,23 @@ namespace ScheduleAggregator.DataModels.Services
             {
                 "ЛЕК" => LessonType.Lecture,
                 "ЛАБ" => LessonType.Laboratory,
-                "ПРАК" => LessonType.Practise
+                "ПРАК" => LessonType.Practise,
+                _ => throw new ArgumentOutOfRangeException(nameof(lesson), lesson, null)
             };
         }
 
-        
-
         private Campus ConvertToCampus(string campusName)
         {
-            if (String.IsNullOrEmpty(campusName))
+            if (string.IsNullOrEmpty(campusName))
                 return Campus.Undefined;
-            if (campusName.Contains("Биржевая линия"))
+            if (campusName.Contains("Биржевая"))
                 return Campus.Birjevaya;
             if (campusName.Contains("Ломоносова"))
                 return Campus.Lomonosova;
             if (campusName.Contains("Кронверкский"))
                 return Campus.Kronverskiy;
 
-            else return Campus.Undefined;
+            return Campus.Undefined;
         }
 
         private TimeSlot ConvertToTimeSlot(string startTime)
@@ -177,8 +173,8 @@ namespace ScheduleAggregator.DataModels.Services
                 "15:20" => TimeSlot.Lesson5,
                 "17:00" => TimeSlot.Lesson6,
                 "18:40" => TimeSlot.Lesson7,
-                "20:20" => TimeSlot.Lesson8, 
-                _ => throw new ArgumentOutOfRangeException("Invalid Time")
+                "20:20" => TimeSlot.Lesson8,
+                _ => throw new ArgumentOutOfRangeException(nameof(startTime), startTime, null)
             };
         }
 
@@ -192,6 +188,7 @@ namespace ScheduleAggregator.DataModels.Services
                 DataDayType.Thursday => DaySlot.Thursday,
                 DataDayType.Friday => DaySlot.Friday,
                 DataDayType.Saturday => DaySlot.Saturday,
+                _ => throw new ArgumentOutOfRangeException(nameof(day), day, null)
             };
         }
 
@@ -201,7 +198,8 @@ namespace ScheduleAggregator.DataModels.Services
             {
                 DataWeekType.Both => WeekType.Both,
                 DataWeekType.Odd => WeekType.Odd,
-                DataWeekType.Even => WeekType.Even
+                DataWeekType.Even => WeekType.Even,
+                _ => throw new ArgumentOutOfRangeException(nameof(week), week, null)
             };
         }
     }
