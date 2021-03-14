@@ -110,8 +110,8 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void CreateFakeSemesterSubjects()
         {
-            var fakeSemesterId = semesterService.Get().First(el => el.Name == "Fake_Semester").Id;
-            foreach(var subjectId in subjectService.Get().Select(el => el.Id))
+            Guid fakeSemesterId = semesterService.Get().First(el => el.Name == "Fake_Semester").Id;
+            foreach(Guid subjectId in subjectService.Get().Select(el => el.Id))
             {
                 semesterSubjectService.Create(subjectId, fakeSemesterId, 0, 0, 0);
             }
@@ -121,16 +121,16 @@ namespace ScheduleAggregator.DataModels.Services
         {
             foreach (var item in _scheduleItems)
             {
-                var name = item.SubjectTitle;
-                var subjectId = semesterSubjectService.Get().First(el => el.Subject.Name == name).Id;
-                var lessonType = ConvertToLessonType(item.Status);
-                var teacherId = teacherService.Get().First(el => el.Name == item.Teacher).Id;
-                var campus = ConvertToCampus(item.Place);
-                var roomId = roomService.Get().First(el => el.Name == item.Room && el.Campus == campus).Id;
-                var timeSlot = ConvertToTimeSlot(item.StartTime);
-                var daySlot = ConvertToDaySlot(item.DataDay);
-                var weekType = ConvertToWeekType(item.DataWeek);
-                var groupId = studyGroupService.Get().First(el => el.Name == item.Group).Id;
+                string name = item.SubjectTitle;
+                Guid subjectId = semesterSubjectService.Get().First(el => el.Subject.Name == name).Id;
+                LessonType lessonType = ConvertToLessonType(item.Status);
+                Guid teacherId = teacherService.Get().First(el => el.Name == item.Teacher).Id;
+                Campus campus = ConvertToCampus(item.Place);
+                Guid roomId = roomService.Get().First(el => el.Name == item.Room && el.Campus == campus).Id;
+                TimeSlot timeSlot = ConvertToTimeSlot(item.StartTime);
+                DaySlot daySlot = ConvertToDaySlot(item.DataDay);
+                WeekType weekType = ConvertToWeekType(item.DataWeek);
+                Guid groupId = studyGroupService.Get().First(el => el.Name == item.Group).Id;
 
                 lessonService.Create(subjectId, lessonType, groupId, teacherId, roomId, timeSlot, daySlot, weekType);
             }
