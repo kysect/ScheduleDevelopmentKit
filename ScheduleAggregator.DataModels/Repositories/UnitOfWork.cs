@@ -1,27 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ScheduleAggregator.DataModels;
-using ScheduleAggregator.DataModels.Entities;
-
+﻿using ScheduleAggregator.DataModels.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
     public class UnitOfWork : IDisposable
     {
-        private ScheduleContext _db;
-        public IGenericRepository<LabourIntensity> LabourIntensities { get;private set; }
-        public IGenericRepository<Lesson> Lessons { get; private set; }
-        public IGenericRepository<Room> Rooms{ get; private set; }
-        public IGenericRepository<Schedule> Schedules{ get; private set; }
-        public IGenericRepository<Semester> Semesters{ get; private set; }
-        public IGenericRepository<SemesterSubject> SemesterSubjects{ get; private set; }
-        public IGenericRepository<StudyCourse> StudyCourses{ get; private set; }
-        public IGenericRepository<Subject> Subjects{ get; private set; }
-        public IGenericRepository<Teacher> Teachers{ get; private set; }
-        public IGenericRepository<StudyGroup> StudyGroups { get; private set; }
+        private readonly ScheduleContext _db;
+        private bool _disposed = false;
+
+        public IGenericRepository<LabourIntensity> LabourIntensities { get; }
+        public IGenericRepository<Lesson> Lessons { get; }
+        public IGenericRepository<Room> Rooms{ get; }
+        public IGenericRepository<Schedule> Schedules{ get; }
+        public IGenericRepository<Semester> Semesters{ get; }
+        public IGenericRepository<SemesterSubject> SemesterSubjects{ get; }
+        public IGenericRepository<StudyCourse> StudyCourses{ get; }
+        public IGenericRepository<Subject> Subjects{ get; }
+        public IGenericRepository<Teacher> Teachers{ get; }
+        public IGenericRepository<StudyGroup> StudyGroups { get; }
 
 
         public UnitOfWork(ScheduleContext db)
@@ -43,22 +39,21 @@ namespace ScheduleAggregator.DataModels.Repositories
         {
             _db.SaveChanges();
         }
+
         public async void SaveAsync()
         {
             await _db.SaveChangesAsync();
         }
 
-        private bool disposed = false;
-
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this._disposed)
             {
                 if (disposing)
                 {
                     _db.Dispose();
                 }
-                this.disposed = true;
+                this._disposed = true;
             }
         }
 

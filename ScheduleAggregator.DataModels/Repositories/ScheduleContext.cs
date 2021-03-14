@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ScheduleAggregator.DataModels;
 using ScheduleAggregator.DataModels.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 
 namespace ScheduleAggregator.DataModels.Repositories

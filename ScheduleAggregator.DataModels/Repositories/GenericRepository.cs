@@ -1,17 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        DbContext _context;
-        DbSet<TEntity> _dbSet;
+        private readonly DbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(DbContext context, DbSet<TEntity> set)
         {
@@ -24,10 +20,6 @@ namespace ScheduleAggregator.DataModels.Repositories
             return _dbSet;
         }
 
-        public IQueryable<TEntity> Get(Func<TEntity, bool> predicate)
-        {
-            return _dbSet.Where(predicate).AsQueryable();
-        }
         public TEntity FindById(Guid id)
         {
             return _dbSet.Find(id);
@@ -39,11 +31,13 @@ namespace ScheduleAggregator.DataModels.Repositories
             _context.SaveChanges();
             return item;
         }
+
         public void Update(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);
