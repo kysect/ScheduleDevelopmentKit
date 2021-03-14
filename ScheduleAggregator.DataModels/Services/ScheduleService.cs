@@ -2,35 +2,37 @@
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class ScheduleService
+    public class ScheduleService : IService<Schedule>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public ScheduleService(UnitOfWork uof)
         {
             _uof = uof;
         }
+
         public Guid Create()
         {
-            var Out = new Schedule();
-            _uof.Schedules.Create(Out);
-            return Out.Id;
+            var result = new Schedule();
+            _uof.Schedules.Create(result);
+            return result.Id;
         }
-        public void AddLesson(Guid scheduleID, Guid lessonID)
+
+        public void AddLesson(Guid scheduleId, Guid lessonId)
         {
-            var schedule = _uof.Schedules.FindById(scheduleID);
-            if (!schedule.Lessons.Exists(el => el.Id == lessonID))
+            var schedule = _uof.Schedules.FindById(scheduleId);
+            if (!schedule.Lessons.Exists(l => l.Id == lessonId))
             {
-                schedule.Lessons.Add(_uof.Lessons.FindById(lessonID));
+                schedule.Lessons.Add(_uof.Lessons.FindById(lessonId));
                 _uof.Schedules.Update(schedule);
             }
         }
 
-        #region SameOperations
-
-        public Schedule FindByID(Guid id)
+        public Schedule FindById(Guid id)
         {
             return _uof.Schedules.FindById(id);
         }
@@ -49,6 +51,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.Schedules.Update(schedule);
         }
-        #endregion
     }
 }

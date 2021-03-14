@@ -3,33 +3,35 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleAggregator.DataModels.Interfaces;
 
 namespace ScheduleAggregator.DataModels.Services
 {
-    public class SemesterSubjectService
+    public class SemesterSubjectService : IService<SemesterSubject>
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public SemesterSubjectService(UnitOfWork uof)
         {
             _uof = uof;
         }
-        public Guid Create(Guid subjectID, Guid semesterID, uint lecture, uint practise, uint laboratory)
+
+        public Guid Create(Guid subjectId, Guid semesterId, uint lecture, uint practice, uint laboratory)
         {
-            if (_uof.SemesterSubjects.Get().Any(el => el.Subject.Id == subjectID))
+            if (_uof.SemesterSubjects.Get().Any(s => s.Subject.Id == subjectId))
                 throw new Exception("The SemesterSubject already exists");
 
-            var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practise};
-            var Out = new SemesterSubject() { 
-                Subject = _uof.Subjects.FindById(subjectID),
+            var labourIntensity = new LabourIntensity() { Laboratory = laboratory, Lecture = lecture, Practise = practice};
+            var result = new SemesterSubject() { 
+                Subject = _uof.Subjects.FindById(subjectId),
                 LabourIntensity = labourIntensity,
-                Semester = _uof.Semesters.FindById(semesterID)
+                Semester = _uof.Semesters.FindById(semesterId)
             };
-            _uof.SemesterSubjects.Create(Out);
-            return Out.Id;
+            _uof.SemesterSubjects.Create(result);
+            return result.Id;
         }
-        #region SameOperations
 
-        public SemesterSubject FindByID(Guid id)
+        public SemesterSubject FindById(Guid id)
         {
             return _uof.SemesterSubjects.FindById(id);
         }
@@ -48,6 +50,5 @@ namespace ScheduleAggregator.DataModels.Services
         {
             _uof.SemesterSubjects.Update(semesterSubject);
         }
-        #endregion 
     }
 }
