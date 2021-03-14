@@ -41,7 +41,7 @@ namespace ScheduleAggregator.DataModels.Services
             _provider = new ItmoApiProvider();
             _scheduleItems = _provider.ScheduleApi.GetGroupPackSchedule(studyGroupService.Get().Select(el => el.Name).ToList());
 
-            // See https://github.com/kysect/ScheduleAggregator/issues/27
+            // TODO: https://github.com/kysect/ScheduleAggregator/issues/27
             _scheduleItems.RemoveAll(el => String.IsNullOrEmpty(el.Room) || String.IsNullOrEmpty(el.Place) || String.IsNullOrEmpty(el.Teacher));
 
         }
