@@ -3,15 +3,13 @@ using ScheduleAggregator.DataModels.Enums;
 using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Services
 {
     public class LessonService
     {
-        private UnitOfWork _uof;
+        private readonly UnitOfWork _uof;
+
         public LessonService(UnitOfWork uof)
         {
             _uof = uof;
@@ -53,15 +51,10 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.Lessons.Get();
         }
-
-        public IEnumerable<Lesson> Get(Func<Lesson, bool> predicate)
+        
+        public void Remove(Guid lessonId)
         {
-            return _uof.Lessons.Get(predicate);
-        }
-
-        public void Remove(Guid lessonID)
-        {
-            _uof.Lessons.Remove(_uof.Lessons.FindById(lessonID));
+            _uof.Lessons.Remove(_uof.Lessons.FindById(lessonId));
         }
 
         public void Update(Lesson lesson)

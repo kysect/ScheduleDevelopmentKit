@@ -3,8 +3,6 @@ using ScheduleAggregator.DataModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleAggregator.DataModels.Services
 {
@@ -17,7 +15,7 @@ namespace ScheduleAggregator.DataModels.Services
         }
         public Guid Create(string name, Guid course)
         { 
-            if (_uof.StudyGroups.Get(el => el.Name == name).Any())
+            if (_uof.StudyGroups.Get().Any(el => el.Name == name))
                 throw new Exception("The StudyGroup already exists");
 
             var Out = new StudyGroup() { Name = name, StudyCourse = _uof.StudyCourses.FindById(course) };
@@ -35,15 +33,12 @@ namespace ScheduleAggregator.DataModels.Services
         {
             return _uof.StudyGroups.Get();
         }
+        
+        public void Remove(Guid studyGroupId)
+        {
+            _uof.StudyGroups.Remove(_uof.StudyGroups.FindById(studyGroupId));
+        }
 
-        public IEnumerable<StudyGroup> Get(Func<StudyGroup, bool> predicate)
-        {
-            return _uof.StudyGroups.Get(predicate);
-        }
-        public void Remove(Guid studyGroupID)
-        {
-            _uof.StudyGroups.Remove(_uof.StudyGroups.FindById(studyGroupID));
-        }
         public void Update(StudyGroup studyGroup)
         {
             _uof.StudyGroups.Update(studyGroup);
