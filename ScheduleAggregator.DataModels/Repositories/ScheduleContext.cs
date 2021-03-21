@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Entity;
 using ScheduleAggregator.DataModels.Entities;
-
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
     public class ScheduleContext : DbContext
     {
 
-        public ScheduleContext(DbContextOptions<ScheduleContext> options)
-        : base(options)
-        { }
+        //TODO: fix
+        //public ScheduleContext(DbContextOptions<ScheduleContext> options)
+        //: base(options)
+        //{ }
 
         public DbSet<LabourIntensity> LabourIntensities{ get; set; }
         public DbSet<Lesson> Lessons{ get; set; }

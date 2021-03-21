@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace ScheduleAggregator.DataModels.Repositories
 {
