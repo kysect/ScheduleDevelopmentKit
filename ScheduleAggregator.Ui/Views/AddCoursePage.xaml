@@ -13,21 +13,29 @@
         <viewModels:AddCourseViewModel />
     </Page.DataContext>
     <Grid>
-        <ListBox ItemsSource="{Binding Courses}">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="entity:StudyCourse">
-                    <StackPanel Margin="10">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="16"
-                            Text="{Binding Id}" />
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="16"
-                            Text="{Binding Name}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBox
+                    Width="200"
+                    Margin="5"
+                    Header="Enter name:"
+                    PlaceholderText="Name"
+                    Text="{Binding NewCourseName, Mode=TwoWay}" />
+                <Button Command="{Binding AddNewCourseCommand}" Content="Add" />
+            </StackPanel>
+            <ListBox ItemsSource="{Binding Courses, Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="entity:StudyCourse">
+                        <StackPanel Margin="10">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="16"
+                                Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
     </Grid>
 </Page>
