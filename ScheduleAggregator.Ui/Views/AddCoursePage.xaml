@@ -2,12 +2,32 @@
     x:Class="ScheduleAggregator.Ui.Views.AddCoursePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ScheduleAggregator.Ui.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:entity="using:ScheduleAggregator.DataModels.Entities"
+    xmlns:local="using:ScheduleAggregator.Ui.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    xmlns:viewModels="using:ScheduleAggregator.Ui.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <viewModels:AddCourseViewModel />
+    </Page.DataContext>
     <Grid>
+        <ListBox ItemsSource="{Binding Courses}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="entity:StudyCourse">
+                    <StackPanel Margin="10">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="16"
+                            Text="{Binding Id}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="16"
+                            Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
