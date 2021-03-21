@@ -141,6 +141,8 @@
       <DependentUpon>ScheduleTimeSlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ExecutionContext.cs" />
+    <Compile Include="ViewModels\AddCourseViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AddCoursePage.xaml.cs">
@@ -270,6 +272,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduleAggregator.DataModels\ScheduleAggregator.DataModels.csproj">
+      <Project>{95FA39D9-119C-4F45-A486-2A214003C40D}</Project>
+      <Name>ScheduleAggregator.DataModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
