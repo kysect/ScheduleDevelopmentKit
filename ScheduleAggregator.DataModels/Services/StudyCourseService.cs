@@ -16,14 +16,14 @@ namespace ScheduleAggregator.DataModels.Services
             _uof = uof;
         }
 
-        public Guid Create(string name)
+        public StudyCourse Create(string name)
         {
             if (_uof.StudyCourses.Get().Any(c => c.Name == name))
                 throw new Exception("The StudyCourse already exists");
 
             var result = new StudyCourse() { Name = name };
             _uof.StudyCourses.Create(result);
-            return result.Id;
+            return result;
         }
 
         public void AddGroup(Guid courseId, Guid groupId)
