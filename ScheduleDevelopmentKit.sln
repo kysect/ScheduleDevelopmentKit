@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.UiLe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.Core", "ScheduleDevelopmentKit.Core\ScheduleDevelopmentKit.Core.csproj", "{0B2297C5-924E-444E-BD23-FCF6D9E4628E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleDevelopmentKit.Ui", "ScheduleDevelopmentKit.Ui\ScheduleDevelopmentKit.Ui.csproj", "{048C0734-96C4-45FD-B0BA-327767F92297}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.DataModels", "ScheduleDevelopmentKit.DataModels\ScheduleDevelopmentKit.DataModels.csproj", "{95FA39D9-119C-4F45-A486-2A214003C40D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleDevelopmentKit.Desktop", "ScheduleDevelopmentKit.Desktop\ScheduleDevelopmentKit.Desktop.csproj", "{1603218F-0848-4D43-9C2C-D07EADA132F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.Desktop", "ScheduleDevelopmentKit.Desktop\ScheduleDevelopmentKit.Desktop.csproj", "{1603218F-0848-4D43-9C2C-D07EADA132F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,34 +87,6 @@ Global
 		{0B2297C5-924E-444E-BD23-FCF6D9E4628E}.Release|x64.Build.0 = Release|Any CPU
 		{0B2297C5-924E-444E-BD23-FCF6D9E4628E}.Release|x86.ActiveCfg = Release|Any CPU
 		{0B2297C5-924E-444E-BD23-FCF6D9E4628E}.Release|x86.Build.0 = Release|Any CPU
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|Any CPU.Build.0 = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|Any CPU.Deploy.0 = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM.ActiveCfg = Debug|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM.Build.0 = Debug|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM.Deploy.0 = Debug|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM64.Build.0 = Debug|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x64.ActiveCfg = Debug|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x64.Build.0 = Debug|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x64.Deploy.0 = Debug|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x86.ActiveCfg = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x86.Build.0 = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Debug|x86.Deploy.0 = Debug|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|Any CPU.ActiveCfg = Release|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM.ActiveCfg = Release|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM.Build.0 = Release|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM.Deploy.0 = Release|ARM
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM64.ActiveCfg = Release|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM64.Build.0 = Release|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|ARM64.Deploy.0 = Release|ARM64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x64.ActiveCfg = Release|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x64.Build.0 = Release|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x64.Deploy.0 = Release|x64
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x86.ActiveCfg = Release|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x86.Build.0 = Release|x86
-		{048C0734-96C4-45FD-B0BA-327767F92297}.Release|x86.Deploy.0 = Release|x86
 		{95FA39D9-119C-4F45-A486-2A214003C40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95FA39D9-119C-4F45-A486-2A214003C40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95FA39D9-119C-4F45-A486-2A214003C40D}.Debug|ARM.ActiveCfg = Debug|Any CPU
