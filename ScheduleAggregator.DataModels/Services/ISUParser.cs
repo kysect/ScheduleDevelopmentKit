@@ -48,21 +48,21 @@ namespace ScheduleAggregator.DataModels.Services
 
         private void Init()
         {
-            Guid course = studyCourseService.Create("Fake_Course");
-            semesterService.Create("Fake_Semester", course);
+            Guid courseId = studyCourseService.Create("Fake_Course").Id;
+            semesterService.Create("Fake_Semester", courseId);
 
-            studyGroupService.Create("M32011", course);
-            studyGroupService.Create("M32021", course);
-            studyGroupService.Create("M32031", course);
-            studyGroupService.Create("M32041", course);
-            studyGroupService.Create("M32051", course);
-            studyGroupService.Create("M32061", course);
-            studyGroupService.Create("M32071", course);
-            studyGroupService.Create("M32081", course);
-            studyGroupService.Create("M32091", course);
-            studyGroupService.Create("M32101", course);
-            studyGroupService.Create("M32111", course);
-            studyGroupService.Create("M32122", course);
+            studyGroupService.Create("M32011", courseId);
+            studyGroupService.Create("M32021", courseId);
+            studyGroupService.Create("M32031", courseId);
+            studyGroupService.Create("M32041", courseId);
+            studyGroupService.Create("M32051", courseId);
+            studyGroupService.Create("M32061", courseId);
+            studyGroupService.Create("M32071", courseId);
+            studyGroupService.Create("M32081", courseId);
+            studyGroupService.Create("M32091", courseId);
+            studyGroupService.Create("M32101", courseId);
+            studyGroupService.Create("M32111", courseId);
+            studyGroupService.Create("M32122", courseId);
         }
 
         public void ParseFromIsu()

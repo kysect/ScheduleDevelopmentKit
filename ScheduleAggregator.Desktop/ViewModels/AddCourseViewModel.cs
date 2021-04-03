@@ -11,7 +11,7 @@ namespace ScheduleAggregator.Desktop.ViewModels
         public AddCourseViewModel()
         {
             AddNewCourseCommand = new BaseCommand(_ => AddNewCourse());
-            Courses = new ObservableCollection<StudyCourse>(ExecutionContext.Instance.Courses);
+            Courses = new ObservableCollection<StudyCourse>(ExecutionContext.Instance.StudyCourseService.Get());
         }
 
         public ObservableCollection<StudyCourse> Courses { get; }
@@ -22,9 +22,8 @@ namespace ScheduleAggregator.Desktop.ViewModels
 
         private void AddNewCourse()
         {
-            var newCourse = new StudyCourse {Name = NewCourseName};
-            ExecutionContext.Instance.Courses.Add(newCourse);
-            Courses.Add(newCourse);
+            StudyCourse studyCourse = ExecutionContext.Instance.StudyCourseService.Create(NewCourseName);
+            Courses.Add(studyCourse);
             OnPropertyChanged(nameof(Courses));
         }
     }
