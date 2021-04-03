@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="ScheduleDevelopmentKit.Ui.Controls.ScheduleClassControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScheduleDevelopmentKit.Ui.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+ 
+    <controls:DockPanel>
+        <StackPanel Orientation="Horizontal" controls:DockPanel.Dock="Bottom" Spacing="3" Margin="0 4 0 0">
+            <TextBlock  Text="M3201"/>
+            <TextBlock  Text="M3202"/>
+            <TextBlock  Text="M3203"/>
+            <TextBlock  Text="M3203"/>
+        </StackPanel>
+        <TextBlock Text="Физика"  controls:DockPanel.Dock="Left" />
+        <TextBlock Text="Музыченко Я. Б. " TextAlignment="Right" controls:DockPanel.Dock="Right"/>
+        
+        
+    </controls:DockPanel>
+
+</UserControl>
