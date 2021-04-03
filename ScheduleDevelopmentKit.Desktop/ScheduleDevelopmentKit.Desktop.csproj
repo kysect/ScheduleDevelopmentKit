@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.4" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduleDevelopmentKit.DataModels\ScheduleDevelopmentKit.DataModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\ScheduleClassControl.xaml.cs">
+      <DependentUpon>ScheduleClassControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ScheduleControl.xaml.cs">
+      <DependentUpon>ScheduleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ScheduleDayControl.xaml.cs">
+      <DependentUpon>ScheduleDayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ScheduleTimeSlotControl.xaml.cs">
+      <DependentUpon>ScheduleTimeSlotControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddCoursePage.xaml.cs">
+      <DependentUpon>AddCoursePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AddGroupPage.xaml.cs">
+      <DependentUpon>AddGroupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SchedulePage.xaml.cs">
+      <DependentUpon>SchedulePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\ScheduleClassControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ScheduleControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ScheduleDayControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ScheduleTimeSlotControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddCoursePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddGroupPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SchedulePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>
