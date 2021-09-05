@@ -19,7 +19,7 @@ namespace ScheduleDevelopmentKit.DataModels.Services
         public Guid Create(string name)
         {
             if (_uof.StudyStreams.Get().Any(x => x.Name == name))
-                throw new Exception();
+                throw new ArgumentException($"Study stream with name {name} already exists");
 
             StudyStream studyStream = new StudyStream() { Name = name };
             _uof.StudyStreams.Create(studyStream);
