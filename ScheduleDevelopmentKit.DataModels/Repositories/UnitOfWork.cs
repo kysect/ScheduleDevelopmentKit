@@ -18,7 +18,7 @@ namespace ScheduleDevelopmentKit.DataModels.Repositories
         public IGenericRepository<Subject> Subjects{ get; }
         public IGenericRepository<Teacher> Teachers{ get; }
         public IGenericRepository<StudyGroup> StudyGroups { get; }
-
+        public IGenericRepository<StudyStream> StudyStreams { get; }
 
         public UnitOfWork(ScheduleContext db)
         {
@@ -33,6 +33,7 @@ namespace ScheduleDevelopmentKit.DataModels.Repositories
             Subjects = new GenericRepository<Subject>(db, db.Subjects);
             Teachers = new GenericRepository<Teacher>(db, db.Teachers);
             StudyGroups = new GenericRepository<StudyGroup>(db, db.StudyGroups);
+            StudyStreams = new GenericRepository<StudyStream>(db, db.StudyStreams);
         }
 
         public void Save()
