@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScheduleDevelopmentKit.Domain.Entities;
 
-namespace ScheduleDevelopmentKit.Domain.Repositories
+namespace ScheduleDevelopmentKit.Domain
 {
-    public class ScheduleContext : DbContext
+    public class ScheduleDbContext : DbContext
     {
-        public ScheduleContext(DbContextOptions<ScheduleContext> options)
+        public ScheduleDbContext(DbContextOptions<ScheduleDbContext> options)
             : base(options)
         {
         }

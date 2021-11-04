@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ScheduleDevelopmentKit.Domain.Interfaces
+namespace ScheduleDevelopmentKit.LegacyCore.Interfaces
 {
     public interface IService<T> where T : class
     {

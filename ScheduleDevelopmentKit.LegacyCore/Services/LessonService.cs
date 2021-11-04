@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using ScheduleDevelopmentKit.Domain.Enums;
 using ScheduleDevelopmentKit.Domain.Entities;
-using ScheduleDevelopmentKit.Domain.Repositories;
-using ScheduleDevelopmentKit.Domain.Interfaces;
+using ScheduleDevelopmentKit.LegacyCore.Interfaces;
 
-namespace ScheduleDevelopmentKit.Domain.Services
+namespace ScheduleDevelopmentKit.LegacyCore.Services
 {
     public class LessonService : IService<Lesson>
     {

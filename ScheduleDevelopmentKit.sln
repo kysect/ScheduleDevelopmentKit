@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.Doma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleDevelopmentKit.ConsolePolygon", "ScheduleDevelopmentKit.ConsolePolygon\ScheduleDevelopmentKit.ConsolePolygon.csproj", "{719C52C2-9EE4-46E2-BD92-7D805DA3F080}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleDevelopmentKit.LegacyCore", "ScheduleDevelopmentKit.LegacyCore\ScheduleDevelopmentKit.LegacyCore.csproj", "{B50FF16E-757F-43B4-8D0C-8FEE7CE7C736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{719C52C2-9EE4-46E2-BD92-7D805DA3F080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{719C52C2-9EE4-46E2-BD92-7D805DA3F080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{719C52C2-9EE4-46E2-BD92-7D805DA3F080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B50FF16E-757F-43B4-8D0C-8FEE7CE7C736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B50FF16E-757F-43B4-8D0C-8FEE7CE7C736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B50FF16E-757F-43B4-8D0C-8FEE7CE7C736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B50FF16E-757F-43B4-8D0C-8FEE7CE7C736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

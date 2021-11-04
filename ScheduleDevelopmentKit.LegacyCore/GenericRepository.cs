@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace ScheduleDevelopmentKit.Domain.Repositories
+namespace ScheduleDevelopmentKit.LegacyCore
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

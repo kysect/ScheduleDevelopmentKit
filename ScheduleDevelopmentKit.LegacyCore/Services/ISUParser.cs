@@ -5,9 +5,9 @@ using Kysect.ItmoScheduleSdk;
 using Kysect.ItmoScheduleSdk.Models;
 using Kysect.ItmoScheduleSdk.Types;
 using ScheduleDevelopmentKit.Domain.Enums;
-using ScheduleDevelopmentKit.Domain.Repositories;
+using ScheduleDevelopmentKit.LegacyCore;
 
-namespace ScheduleDevelopmentKit.Domain.Services
+namespace ScheduleDevelopmentKit.LegacyCore.Services
 {
     public class IsuParser
     {

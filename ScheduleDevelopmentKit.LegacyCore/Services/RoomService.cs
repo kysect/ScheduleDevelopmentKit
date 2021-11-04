@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleDevelopmentKit.Domain.Enums;
-using ScheduleDevelopmentKit.Domain.Repositories;
 using ScheduleDevelopmentKit.Domain.Entities;
-using ScheduleDevelopmentKit.Domain.Interfaces;
+using ScheduleDevelopmentKit.LegacyCore.Interfaces;
 
-namespace ScheduleDevelopmentKit.Domain.Services
+namespace ScheduleDevelopmentKit.LegacyCore.Services
 {
     public class RoomService : IService<Room>
     {

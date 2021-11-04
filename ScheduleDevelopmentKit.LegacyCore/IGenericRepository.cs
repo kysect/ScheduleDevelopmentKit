@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ScheduleDevelopmentKit.Domain.Repositories
+namespace ScheduleDevelopmentKit.LegacyCore
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

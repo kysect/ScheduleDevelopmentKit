@@ -1,11 +1,12 @@
-﻿using ScheduleDevelopmentKit.Domain.Entities;
+﻿using ScheduleDevelopmentKit.Domain;
+using ScheduleDevelopmentKit.Domain.Entities;
 using System;
 
-namespace ScheduleDevelopmentKit.Domain.Repositories
+namespace ScheduleDevelopmentKit.LegacyCore
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly ScheduleContext _db;
+        private readonly ScheduleDbContext _db;
         private bool _disposed = false;
 
         public IGenericRepository<LabourIntensity> LabourIntensities { get; }
@@ -20,7 +21,7 @@ namespace ScheduleDevelopmentKit.Domain.Repositories
         public IGenericRepository<StudyGroup> StudyGroups { get; }
         public IGenericRepository<StudyStream> StudyStreams { get; }
 
-        public UnitOfWork(ScheduleContext db)
+        public UnitOfWork(ScheduleDbContext db)
         {
             _db = db;
             LabourIntensities = new GenericRepository<LabourIntensity>(db, db.LabourIntensities);

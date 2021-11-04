@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using ScheduleDevelopmentKit.Domain.Entities;
-using ScheduleDevelopmentKit.Domain.Interfaces;
-using ScheduleDevelopmentKit.Domain.Repositories;
+using ScheduleDevelopmentKit.LegacyCore;
+using ScheduleDevelopmentKit.LegacyCore.Interfaces;
 
-namespace ScheduleDevelopmentKit.Domain.Services
+namespace ScheduleDevelopmentKit.LegacyCore.Services
 {
     public class ScheduleService : IService<Schedule>
     {
